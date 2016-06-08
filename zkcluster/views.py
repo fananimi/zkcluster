@@ -7,4 +7,4 @@ def dashboard(request):
     return render(request, 'zkcluster/dashboard.html')
 
 def terminal(request):
-    return render(request, 'zkcluster/dashboard.html')
+    return render(request, 'zkcluster/terminal.html')
