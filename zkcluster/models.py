@@ -13,7 +13,7 @@ class Terminal(models.Model):
     def __unicode__(self):
         return self.name
 
-class ZKUser(models.Model):
+class User(models.Model):
     USER_DEFAULT        = 0
     USER_ADMIN          = 14
 
@@ -22,7 +22,6 @@ class ZKUser(models.Model):
         (USER_ADMIN, _('Administrator'))
     )
 
-    uid = models.IntegerField()
     name = models.CharField(max_length=28)
     privilege = models.SmallIntegerField(choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(max_length=8, blank=True, null=True)

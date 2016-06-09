@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Terminal, ZKUser
+from .models import Terminal, User
 
 admin.site.register(Terminal)
-admin.site.register(ZKUser)
+admin.site.register(User)

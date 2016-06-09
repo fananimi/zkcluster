@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods as alowed
 
-from .models import Terminal, ZKUser
+from .models import Terminal, User
 from .forms import ScanTerminal, SaveTerminal, EditTerminal
 
 @alowed(['GET'])
@@ -105,7 +105,7 @@ def terminal_delete(request, terminal_id):
     return HttpResponse('Mantabs!')
 
 def user(request):
-    users = ZKUser.objects.all()
+    users = User.objects.all()
     data = {
         'users': users
     }
