@@ -1,9 +1,10 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^terminal/$', views.terminal, name='terminal'),
     url(r'^terminal/save$', views.terminal_save, name='terminal_save'),
