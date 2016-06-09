@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods as alowed
 
 from .models import Terminal, User
-from .forms import ScanTerminal, SaveTerminal, EditTerminal
+from .forms import ScanTerminal, SaveTerminal, EditTerminal, UserForm
 
 @alowed(['GET'])
 @login_required
@@ -116,4 +116,11 @@ def user(request):
 @alowed(['GET', 'POST'])
 @login_required
 def user_add(request):
-    return render(request, 'zkcluster/user_add.html')
+    form = UserForm(request.POST or None)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('zkcluster:user')
+    data = {
+        'form': form
+    }
+    return render(request, 'zkcluster/user_add.html', data)

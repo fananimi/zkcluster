@@ -26,7 +26,6 @@ class User(models.Model):
     privilege = models.SmallIntegerField(choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(max_length=8, blank=True, null=True)
     group_id = models.CharField(max_length=7, blank=True, null=True)
-    user = models.OneToOneField("auth.User", related_name="zkuser")
     terminal = models.ForeignKey(Terminal, related_name='zkuser')
 
     def __unicode__(self):

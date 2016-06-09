@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext as _
 
-from .models import Terminal
+from .models import Terminal, User
 
 
 class ScanTerminal(forms.Form):
@@ -106,3 +106,24 @@ class EditTerminal(SaveTerminal):
         self.fields['port'].widget = forms.TextInput(attrs={
             'class': 'form-control'
         })
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('name', 'privilege', 'password', 'terminal')
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': _('Full name'),
+                'class': 'form-control'
+            }),
+            'privilege': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'password': forms.PasswordInput(attrs={
+                'placeholder': _('Password'),
+                'class': 'form-control'
+            }),
+            'terminal': forms.Select(attrs={
+                'class': 'form-control'
+            })
+        }
