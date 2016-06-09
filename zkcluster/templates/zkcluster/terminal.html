@@ -3,7 +3,7 @@
 {% block content %}
   {% if terminals %}
     <div style="margin-bottom: 10px;">
-      <a href="{% url 'zkcluster:terminal_scan' %}">
+      <a href="{% url 'zkcluster:terminal_add' %}">
         <button class="btn btn-default">
           <i class="fa fa-plus-circle" aria-hidden="true"> Add Terminal</i>
         </button>
@@ -48,7 +48,7 @@
     {% else %}
       <div class="col-md-12 text-center">
         <p>No terminal found</p>
-        <a href="#">
+        <a href="{% url 'zkcluster:terminal_add' %}">
           <button class="btn btn-default">Add Terminal</button>
         </a>
       </div>

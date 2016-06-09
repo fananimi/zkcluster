@@ -3,7 +3,7 @@
 {% block content %}
   <div class="row">
     <div class="col-sm-6">
-      <form method="POST" action="">
+      <form method="POST" action="{% url 'zkcluster:terminal_save' %}?connected=1">
         {% csrf_token %}
         <div class="form-group">
           <label for="{{ form.email.auto_id }}">{{ form.ip.label }}</label>
@@ -25,7 +25,7 @@
           <span class="error">{{ form.name.errors.0 }}</span>
           {{ form.name }}
         </div>
-        <button type="submit" class="btn btn-primary">Scan</button>
+        <button type="submit" class="btn btn-primary">Save</button>
       </form>
     </div>
   </div>
