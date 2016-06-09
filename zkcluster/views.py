@@ -1,6 +1,7 @@
 import zk
 import urlparse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods as alowed
 
@@ -8,14 +9,17 @@ from .models import Terminal
 from .forms import ScanTerminal, SaveTerminal, EditTerminal
 
 @alowed(['GET'])
+@login_required
 def index(request):
     return render(request, 'zkcluster/index.html')
 
 @alowed(['GET'])
+@login_required
 def dashboard(request):
     return render(request, 'zkcluster/dashboard.html')
 
 @alowed(['GET'])
+@login_required
 def terminal(request):
     terminals = Terminal.objects.all()
     data = {
@@ -24,6 +28,7 @@ def terminal(request):
     return render(request, 'zkcluster/terminal.html', data)
 
 @alowed(['POST'])
+@login_required
 def terminal_save(request):
     connected = request.GET.get('connected')
     if connected:
@@ -40,6 +45,7 @@ def terminal_save(request):
     return render(request, 'zkcluster/terminal_save.html', data)
 
 @alowed(['GET', 'POST'])
+@login_required
 def terminal_add(request):
     form = ScanTerminal(request.POST or None)
     if request.POST and form.is_valid():
@@ -79,6 +85,7 @@ def terminal_add(request):
     return render(request, 'zkcluster/terminal_scan.html', data)
 
 @alowed(['GET', 'POST'])
+@login_required
 def terminal_edit(request, terminal_id):
     terminal = get_object_or_404(Terminal, pk=terminal_id)
     form = EditTerminal(request.POST or None, instance=terminal)
@@ -92,6 +99,7 @@ def terminal_edit(request, terminal_id):
     return render(request, 'zkcluster/terminal_edit.html', data)
 
 @alowed(['GET', 'POST'])
+@login_required
 def terminal_delete(request, terminal_id):
     from django.http import HttpResponse
     return HttpResponse('Mantabs!')

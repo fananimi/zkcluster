@@ -12,9 +12,6 @@
     <div class="page-wrap">
       <div class="container">
         <nav class="navbar navbar-inverse" role="navigation">
-          <!-- <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#mainMenu">
-              <i class="fa fa-user" aria-hidden="true"> Menu</i>
-            </button> -->
           <div class="container-fluid" id="mainMenu">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -25,27 +22,29 @@
               </button>
               <a class="navbar-brand" href="{% url 'zkcluster:index' %}">zkcluster</a>
             </div>
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li {% if request.path == '/zkcluster/dashboard/' %}class="active"{% endif %}>
-                  <a href="{% url 'zkcluster:dashboard' %}">
-                    <i class="fa fa-tachometer" aria-hidden="true"> Dashboard</i>
-                  </a>
-                </li>
-                <li {% if request.path == '/zkcluster/terminal/' %}class="active"{% endif %}>
-                  <a href="{% url 'zkcluster:terminal' %}">
-                    <i class="fa fa-wrench" aria-hidden="true"> Terminal</i>
-                  </a>
-                </li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li>
-                  <a href="#">
-                    <i class="fa fa-sign-out" aria-hidden="true"> Logout</i>
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {% if request.user.is_superuser %}
+              <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li {% if request.path == '/zkcluster/dashboard/' %}class="active"{% endif %}>
+                    <a href="{% url 'zkcluster:dashboard' %}">
+                      <i class="fa fa-tachometer" aria-hidden="true"> Dashboard</i>
+                    </a>
+                  </li>
+                  <li {% if request.path == '/zkcluster/terminal/' %}class="active"{% endif %}>
+                    <a href="{% url 'zkcluster:terminal' %}">
+                      <i class="fa fa-wrench" aria-hidden="true"> Terminal</i>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-sign-out" aria-hidden="true"> Logout</i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            {% endif %}
           </div>
         </nav>
       </div>
