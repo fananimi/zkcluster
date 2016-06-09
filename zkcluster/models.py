@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 
+import zk
+from django.db.models.signals import post_save
+from django.dispatch.dispatcher import receiver
 from django.utils.translation import ugettext as _
-
 from django.db import models
+
+from .exceptions import ZKError
 
 class Terminal(models.Model):
     name = models.CharField(max_length=200)
@@ -30,3 +34,40 @@ class User(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    # @property
+    # def terminal(self):
+    #     return getattr(self, 'terminal')
+
+    def save(self, *args, **kwargs):
+        # connect to terminal
+        ip = self.terminal.ip
+        port = self.terminal.port
+        terminal = zk.ZK(ip, port, 5)
+        conn = False
+        try:
+            conn = terminal.connect()
+            if conn:
+                setattr(self, 'connection', terminal)
+                terminal.disable_device()
+            else:
+                raise ZKError('can\'t connect to terminal')
+        except Exception, e:
+            raise ZKError(str(e))
+
+        super(User, self).save(*args, **kwargs)
+
+@receiver(post_save, sender=User)
+def on_save_user(sender, **kwargs):
+    instance = kwargs['instance']
+    conn = instance.connection
+    conn.set_user(
+        uid=int(instance.id),
+        name=str(instance.name),
+        privilege=int(instance.privilege),
+        password=str(instance.password),
+        user_id=str(instance.id)
+    )
+    conn.test_voice()
+    conn.enable_device()
+    conn.disconnect()

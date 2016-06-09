@@ -5,8 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods as alowed
 
-from .models import Terminal, User
+from .exceptions import ZKError
 from .forms import ScanTerminal, SaveTerminal, EditTerminal, UserForm
+from .models import Terminal, User
 
 @alowed(['GET'])
 @login_required
@@ -59,7 +60,6 @@ def terminal_add(request):
             conn = terminal.connect()
             if conn:
                 terminal.disable_device()
-                terminal.test_voice()
                 sn = terminal.get_serialnumber()
 
                 # manipulate the POST information
@@ -68,7 +68,6 @@ def terminal_add(request):
                 request.POST['serialnumber'] = sn
                 request.POST._mutable = mutable
 
-                terminal.enable_device()
                 return terminal_save(request)
             else:
                 messages.add_message(request, messages.ERROR, 'can\'t connect to terminal')
@@ -76,6 +75,8 @@ def terminal_add(request):
             messages.add_message(request, messages.ERROR, str(e))
         finally:
             if conn:
+                terminal.test_voice()
+                terminal.enable_device()
                 terminal.disconnect()
 
     data = {
@@ -118,8 +119,12 @@ def user(request):
 def user_add(request):
     form = UserForm(request.POST or None)
     if request.POST and form.is_valid():
-        form.save()
-        return redirect('zkcluster:user')
+        try:
+            form.save()
+            return redirect('zkcluster:user')
+        except ZKError, e:
+            messages.add_message(request, messages.ERROR, str(e))
+
     data = {
         'form': form
     }
