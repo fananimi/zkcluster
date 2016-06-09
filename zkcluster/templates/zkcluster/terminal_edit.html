@@ -2,37 +2,75 @@
 
 {% block content %}
   <div class="row">
-    <div class="col-sm-6">
-      <form method="POST" action="">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="{{ form.email.auto_id }}">{{ form.ip.label }}</label>
-          <span class="error">{{ form.ip.errors.0 }}</span>
-          {{ form.ip }}
-        </div>
-        <div class="form-group">
-          <label for="{{ form.port.auto_id }}">{{ form.port.label }}</label>
-          <span class="error">{{ form.port.errors.0 }}</span>
-          {{ form.port }}
-        </div>
-        <div class="form-group">
-          <label for="{{ form.serialnumber.auto_id }}">{{ form.serialnumber.label }}</label>
-          <span class="error">{{ form.serialnumber.errors.0 }}</span>
-          {{ form.serialnumber }}
-        </div>
-        <div class="form-group">
-          <label for="{{ form.name.auto_id }}">{{ form.name.label }}</label>
-          <span class="error">{{ form.name.errors.0 }}</span>
-          {{ form.name }}
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-      </form>
+    <div class="col-md-3">
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active">
+          <a data-toggle="tab" href="#edit">Edit</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#action">Action</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#danger">Danger Zone</a>
+        </li>
+      </ul>
     </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-sm-6">
-        <button class="btn btn-danger">Delete</button>
+    <div class="col-sm-9 tab-content">
+      <div id="edit" class="tab-pane fade in active">
+        <div class="panel panel-primary">
+          <div class="panel-heading">Terminal : {{ terminal.name }}</div>
+        <div class="panel-body">
+          <form method="POST" action="">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="{{ form.email.auto_id }}">{{ form.ip.label }}</label>
+              <span class="error">{{ form.ip.errors.0 }}</span>
+              {{ form.ip }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.port.auto_id }}">{{ form.port.label }}</label>
+              <span class="error">{{ form.port.errors.0 }}</span>
+              {{ form.port }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.serialnumber.auto_id }}">{{ form.serialnumber.label }}</label>
+              <span class="error">{{ form.serialnumber.errors.0 }}</span>
+              {{ form.serialnumber }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.name.auto_id }}">{{ form.name.label }}</label>
+              <span class="error">{{ form.name.errors.0 }}</span>
+              {{ form.name }}
+            </div>
+            <div class="center">
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+        </div>
+      </div>
+      <div id="action" class="tab-pane fade in">
+        <div class="panel panel-success">
+          <div class="panel-heading">Restart Terminal : {{ terminal.name }}</div>
+          <div class="panel-body center">
+            <button class="btn btn-success">Restart</button>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">Shutdown Terminal : {{ terminal.name }}</div>
+          <div class="panel-body center">
+            <button class="btn btn-default">Power off</button>
+          </div>
+        </div>
+      </div>
+      <div id="danger" class="tab-pane fade in">
+        <div class="panel panel-danger">
+          <div class="panel-heading">Delete Terminal : {{ terminal.name }}</div>
+          <div class="panel-body center">
+            <button class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}
