@@ -104,6 +104,8 @@ def terminal_delete(request, terminal_id):
     from django.http import HttpResponse
     return HttpResponse('Mantabs!')
 
+@alowed(['GET', 'POST'])
+@login_required
 def user(request):
     users = User.objects.all()
     data = {
@@ -111,5 +113,7 @@ def user(request):
     }
     return render(request, 'zkcluster/user.html', data)
 
+@alowed(['GET', 'POST'])
+@login_required
 def user_add(request):
     return render(request, 'zkcluster/user_add.html')
