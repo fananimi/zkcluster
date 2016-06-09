@@ -28,10 +28,22 @@
             <td>{{ terminal.serialnumber }}</td>
             <td>{{ terminal.ip }}</td>
             <td>{{ terminal.port }}</td>
-            <td>
+            <td style="text-align: center;">
               <span>
-                <a href="{% url 'zkcluster:terminal_edit' terminal.id %}">
-                  <i class="fa fa-edit" aria-hidden="true"> Edit</i>
+                <a href="{% url 'zkcluster:terminal_edit' terminal.id %}" title="Edit">
+                  <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+              </span>
+              <span>|</span>
+              <span>
+                <a href="{% url 'zkcluster:terminal_edit' terminal.id %}" title="Restart">
+                  <i class="fa fa-refresh" aria-hidden="true"></i>
+                </a>
+              </span>
+              <span>|</span>
+              <span>
+                <a href="{% url 'zkcluster:terminal_edit' terminal.id %}" title="Shutdown">
+                  <i class="fa fa-power-off" aria-hidden="true"></i>
                 </a>
               </span>
             </td>
