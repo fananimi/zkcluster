@@ -1,5 +1,56 @@
 {% extends 'zkcluster/base.html' %}
 
 {% block content %}
-  <h1>Terminal</h1>
+  {% if terminals %}
+    <div style="margin-bottom: 10px;">
+      <a href="#">
+        <button class="btn btn-default">
+          <i class="fa fa-plus-circle" aria-hidden="true"> Add Terminal</i>
+        </button>
+      </a>
+    </div>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Serial Number</th>
+          <th>IP</th>
+          <th>Port</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for terminal in terminals %}
+          <tr>
+            <th scope="row">{{ terminal.id }}</th>
+            <td>{{ terminal.name }}</td>
+            <td>{{ terminal.serialnumber }}</td>
+            <td>{{ terminal.ip }}</td>
+            <td>{{ terminal.port }}</td>
+            <td>
+              <span>
+                <a href="#">
+                  <i class="fa fa-edit" aria-hidden="true"> Edit</i>
+                </a>
+              </span>
+              <span>|</span>
+              <span>
+                <a class="error" href="#">
+                  <i class="fa fa-trash" aria-hidden="true"> Delete</i>
+                </a>
+              </span>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <div class="col-md-12 text-center">
+        <p>No terminal found</p>
+        <a href="#">
+          <button class="btn btn-default">Add Terminal</button>
+        </a>
+      </div>
+  {% endif %}
 {% endblock %}
