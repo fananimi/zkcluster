@@ -127,3 +127,9 @@ class UserForm(forms.ModelForm):
                 'class': 'form-control'
             })
         }
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if password and not password.isdigit():
+            raise forms.ValidationError(_('Enter a whole number.'))
+        return password
