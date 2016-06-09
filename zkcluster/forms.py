@@ -23,6 +23,12 @@ class ScanTerminal(forms.Form):
 
     def clean_ip(self):
         ip = self.cleaned_data.get('ip')
+        try:
+            if self.instance.ip == ip:
+                return ip
+        except AttributeError:
+            pass
+
         terminal = Terminal.objects.filter(ip__iexact=ip).first()
         if terminal:
             raise forms.ValidationError(_('IP already exists'))
@@ -67,6 +73,12 @@ class SaveTerminal(forms.ModelForm, ScanTerminal):
 
     def clean_serialnumber(self):
         serialnumber = self.cleaned_data.get('serialnumber')
+        try:
+            if self.instance.serialnumber == serialnumber:
+                return serialnumber
+        except AttributeError:
+            pass
+
         terminal = Terminal.objects.filter(serialnumber__iexact=serialnumber).first()
         if terminal:
             raise forms.ValidationError(_('Serial number already exists'))
@@ -75,3 +87,15 @@ class SaveTerminal(forms.ModelForm, ScanTerminal):
     class Meta:
         model = Terminal
         fields = ('ip', 'port', 'serialnumber', 'name')
+
+class EditTerminal(SaveTerminal):
+    def __init__(self, *args, **kwargs):
+        super(EditTerminal, self).__init__(*args, **kwargs)
+
+        self.fields['ip'].widget = forms.TextInput(attrs={
+            'placeholder': _('IP Address'),
+            'class': 'form-control'
+        })
+        self.fields['port'].widget = forms.TextInput(attrs={
+            'class': 'form-control'
+        })

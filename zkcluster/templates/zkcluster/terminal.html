@@ -30,14 +30,8 @@
             <td>{{ terminal.port }}</td>
             <td>
               <span>
-                <a href="#">
+                <a href="{% url 'zkcluster:terminal_edit' terminal.id %}">
                   <i class="fa fa-edit" aria-hidden="true"> Edit</i>
-                </a>
-              </span>
-              <span>|</span>
-              <span>
-                <a class="error" href="#">
-                  <i class="fa fa-trash" aria-hidden="true"> Delete</i>
                 </a>
               </span>
             </td>

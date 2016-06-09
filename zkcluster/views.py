@@ -1,11 +1,11 @@
 import zk
 import urlparse
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods as alowed
 
 from .models import Terminal
-from .forms import ScanTerminal, SaveTerminal
+from .forms import ScanTerminal, SaveTerminal, EditTerminal
 
 @alowed(['GET'])
 def index(request):
@@ -77,3 +77,21 @@ def terminal_add(request):
     }
 
     return render(request, 'zkcluster/terminal_scan.html', data)
+
+@alowed(['GET', 'POST'])
+def terminal_edit(request, terminal_id):
+    terminal = get_object_or_404(Terminal, pk=terminal_id)
+    form = EditTerminal(request.POST or None, instance=terminal)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('zkcluster:terminal')
+    data = {
+        'terminal': terminal,
+        'form': form
+    }
+    return render(request, 'zkcluster/terminal_edit.html', data)
+
+@alowed(['GET', 'POST'])
+def terminal_delete(request, terminal_id):
+    from django.http import HttpResponse
+    return HttpResponse('Mantabs!')
