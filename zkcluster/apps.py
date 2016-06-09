@@ -5,3 +5,4 @@ from django.apps import AppConfig
 
 class ZkclusterConfig(AppConfig):
     name = 'zkcluster'
+    verbose_name = 'zkcluster'
