@@ -1,0 +1,108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-09 16:22+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: public/zkcluster/zkcluster/forms.py:9 public/zkcluster/zkcluster/forms.py:65
+#: public/zkcluster/zkcluster/forms.py:103
+msgid "IP Address"
+msgstr "Alamat IP"
+
+#: public/zkcluster/zkcluster/forms.py:17
+msgid "Port"
+msgstr "Port"
+
+#: public/zkcluster/zkcluster/forms.py:34
+msgid "IP already exists"
+msgstr "IP sudah terdaftar"
+
+#: public/zkcluster/zkcluster/forms.py:39
+msgid "Serial Number"
+msgstr "Nomor Seri"
+
+#: public/zkcluster/zkcluster/forms.py:43
+msgid "Serial number"
+msgstr "Nomor seri"
+
+#: public/zkcluster/zkcluster/forms.py:49
+msgid "Name"
+msgstr "Nama"
+
+#: public/zkcluster/zkcluster/forms.py:53
+msgid "Terminal name"
+msgstr "Nama terminal"
+
+#: public/zkcluster/zkcluster/forms.py:84
+msgid "Serial number already exists"
+msgstr "Nomor seri sudah terdaftar"
+
+#: public/zkcluster/zkcluster/forms.py:91
+msgid "This field is required."
+msgstr "Bidang tidak boleh kosong"
+
+#: public/zkcluster/zkcluster/forms.py:116
+msgid "Full name"
+msgstr "Nama lengkap"
+
+#: public/zkcluster/zkcluster/forms.py:123
+msgid "Password"
+msgstr "Kata Sandi"
+
+#: public/zkcluster/zkcluster/forms.py:134
+msgid "Enter a whole number."
+msgstr "Masukkan angka bulat"
+
+#: public/zkcluster/zkcluster/models.py:25
+msgid "User"
+msgstr "Pengguna"
+
+#: public/zkcluster/zkcluster/models.py:26
+msgid "Administrator"
+msgstr "Administrator"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:92
+msgid "Are you ABSOLUTELY sure?"
+msgstr "Apakah anda BENAR-BENAR yakin?"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:99
+msgid "This action"
+msgstr "Aksi ini"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:99
+msgid "CANNOT"
+msgstr "TIDAK DAPAT"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:99
+msgid "be undone"
+msgstr "di kembalikan"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:99
+msgid "This will permanently delete the"
+msgstr "Ini akan menghapus secara permanen"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:99
+msgid "include the all related user of them"
+msgstr "termasuk semua user dan yang berhubungan"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:103
+msgid "Please type in the name of the terminal to confirm"
+msgstr "Mohon ketikan nama terminal untuk konfirmasi"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:111
+msgid "I understand the consequences, delete this repository"
+msgstr "Saya menyadari dampaknya, hapus repository ini"
