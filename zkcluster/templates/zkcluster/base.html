@@ -27,24 +27,24 @@
                 <ul class="nav navbar-nav">
                   <li {% if request.path == '/zkcluster/dashboard/' %}class="active"{% endif %}>
                     <a href="{% url 'zkcluster:dashboard' %}">
-                      <i class="fa fa-tachometer" aria-hidden="true"> Dashboard</i>
+                      <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
                     </a>
                   </li>
                   <li {% if request.path == '/zkcluster/terminal/' %}class="active"{% endif %}>
                     <a href="{% url 'zkcluster:terminal' %}">
-                      <i class="fa fa-wrench" aria-hidden="true"> Terminal</i>
+                      <i class="fa fa-wrench" aria-hidden="true"></i> Terminal
                     </a>
                   </li>
                   <li {% if request.path == '/zkcluster/user/' %}class="active"{% endif %}>
                     <a href="{% url 'zkcluster:user' %}">
-                      <i class="fa fa-user" aria-hidden="true"> User</i>
+                      <i class="fa fa-user" aria-hidden="true"></i> User
                     </a>
                   </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li>
                     <a href="#">
-                      <i class="fa fa-sign-out" aria-hidden="true"> Logout</i>
+                      <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
                     </a>
                   </li>
                 </ul>

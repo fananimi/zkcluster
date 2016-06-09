@@ -5,7 +5,7 @@
     <div style="margin-bottom: 10px;">
       <a href="{% url 'zkcluster:terminal_add' %}">
         <button class="btn btn-default">
-          <i class="fa fa-plus-circle" aria-hidden="true"> Add Terminal</i>
+          <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Terminal
         </button>
       </a>
     </div>
@@ -29,23 +29,28 @@
             <td>{{ terminal.ip }}</td>
             <td>{{ terminal.port }}</td>
             <td style="text-align: center;">
-              <span>
-                <a href="{% url 'zkcluster:terminal_edit' terminal.id %}" title="Edit">
-                  <i class="fa fa-edit" aria-hidden="true"></i>
-                </a>
-              </span>
-              <span>|</span>
-              <span>
-                <a href="{% url 'zkcluster:terminal_edit' terminal.id %}" title="Restart">
-                  <i class="fa fa-refresh" aria-hidden="true"></i>
-                </a>
-              </span>
-              <span>|</span>
-              <span>
-                <a href="{% url 'zkcluster:terminal_edit' terminal.id %}" title="Shutdown">
-                  <i class="fa fa-power-off" aria-hidden="true"></i>
-                </a>
-              </span>
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                  Action <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="{% url 'zkcluster:terminal_edit' terminal.id %}">
+                      <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-refresh" aria-hidden="true"></i> Restart
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-power-off" aria-hidden="true"></i> Power Off
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </td>
           </tr>
         {% endfor %}
