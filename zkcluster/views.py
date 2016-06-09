@@ -3,6 +3,7 @@ import urlparse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods as alowed
 
 from .exceptions import ZKError
@@ -70,7 +71,7 @@ def terminal_add(request):
 
                 return terminal_save(request)
             else:
-                messages.add_message(request, messages.ERROR, 'can\'t connect to terminal')
+                messages.add_message(request, messages.ERROR, _('can\'t connect to terminal'))
         except Exception, e:
             messages.add_message(request, messages.ERROR, str(e))
         finally:
