@@ -102,8 +102,9 @@ def terminal_edit(request, terminal_id):
 @alowed(['GET', 'POST'])
 @login_required
 def terminal_delete(request, terminal_id):
-    from django.http import HttpResponse
-    return HttpResponse('Mantabs!')
+    terminal = get_object_or_404(Terminal, pk=terminal_id)
+    terminal.delete()
+    return redirect('zkcluster:terminal')
 
 @alowed(['GET', 'POST'])
 @login_required

@@ -89,28 +89,46 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{% trans "Delete Confirmation" %}</h4>
+        <h4 class="modal-title">{% trans "Are you ABSOLUTELY sure?" %}</h4>
       </div>
       <div class="modal-body">
-        <form method="POST" action="">
+        <form method="POST" action="{% url 'zkcluster:terminal_delete' terminal.id %}">
+          {% csrf_token %}
           <div class="form-group">
             <span>
-              {% trans "This action" %} <b>{% trans "CANNOT" %}</b> {% trans "be undone" %}. {% trans "This will permanently delete the" %} <b>{{ terminal_name }}</b> {% trans "include all the related user of them" %}.
+              {% trans "This action" %} <b>{% trans "CANNOT" %}</b> {% trans "be undone" %}. {% trans "This will permanently delete the" %} <b>{{ terminal.name }}</b> {% trans "include the all related user of them" %}.
             </span>
             <br/>
             <label for="name">
-              Please type in the name of the terminal to confirm
+              {% trans "Please type in the name of the terminal to confirm" %}
             </label>
-            <input class="form-control" id="delete_name" name="name" type="text"/>
+            <input autocomplete="off" class="form-control" id="field_confirm" name="name" type="text"/>
           </div>
         </form>
       </div>
       <div class="modal-footer center">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">
-          I understand the consequences, delete this repository
+        <button type="button" id="buttonConfirm" class="btn btn-danger" data-dismiss="modal" disabled>
+          {% trans "I understand the consequences, delete this repository" %}
         </button>
       </div>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    var terminal_name = '{{ terminal.name }}';
+    $('#deleteConfirm').on('shown.bs.modal', function () {
+      $('#field_confirm').focus();
+    });
+    $('#field_confirm').on('input', function() {
+      var name = $('#field_confirm').val();
+      if (terminal_name == name){
+        $('#buttonConfirm').prop('disabled', false);
+      } else {
+        $('#buttonConfirm').prop('disabled', true);
+      };
+    });
+  </script>
 {% endblock %}
