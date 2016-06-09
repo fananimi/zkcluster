@@ -3,16 +3,16 @@ from __future__ import unicode_literals
 import zk
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 from .exceptions import ZKError
 
 class Terminal(models.Model):
-    name = models.CharField(max_length=200)
-    serialnumber = models.CharField(max_length=100, unique=True)
-    ip = models.CharField(max_length=15, unique=True)
-    port = models.IntegerField(default=4370)
+    name = models.CharField(_('name'), max_length=200)
+    serialnumber = models.CharField(_('serialnumber'), max_length=100, unique=True)
+    ip = models.CharField(_('ip'), max_length=15, unique=True)
+    port = models.IntegerField(_('port'), default=4370)
 
     def __unicode__(self):
         return self.name
@@ -26,18 +26,14 @@ class User(models.Model):
         (USER_ADMIN, _('Administrator'))
     )
 
-    name = models.CharField(max_length=28)
-    privilege = models.SmallIntegerField(choices=PRIVILEGE_COICES, default=USER_DEFAULT)
-    password = models.CharField(max_length=8, blank=True, null=True)
-    group_id = models.CharField(max_length=7, blank=True, null=True)
+    name = models.CharField(_('name'), max_length=28)
+    privilege = models.SmallIntegerField(_('privilege'), choices=PRIVILEGE_COICES, default=USER_DEFAULT)
+    password = models.CharField(_('password'), max_length=8, blank=True, null=True)
+    group_id = models.CharField(_('group id'), max_length=7, blank=True, null=True)
     terminal = models.ForeignKey(Terminal, related_name='zkuser')
 
     def __unicode__(self):
         return self.name
-
-    # @property
-    # def terminal(self):
-    #     return getattr(self, 'terminal')
 
     def save(self, *args, **kwargs):
         # connect to terminal
@@ -51,7 +47,8 @@ class User(models.Model):
                 setattr(self, 'connection', terminal)
                 terminal.disable_device()
             else:
-                raise ZKError('can\'t connect to terminal')
+                err_msg = _('can\'t connect to terminal')
+                raise ZKError(err_msg)
         except Exception, e:
             raise ZKError(str(e))
 

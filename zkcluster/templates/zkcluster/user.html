@@ -1,11 +1,12 @@
 {% extends 'zkcluster/base.html' %}
+{% load i18n %}
 
 {% block content %}
   {% if users %}
     <div style="margin-bottom: 10px;">
       <a href="{% url 'zkcluster:user_add' %}">
         <button class="btn btn-default">
-          <i class="fa fa-plus-circle" aria-hidden="true"></i> Add User
+          <i class="fa fa-plus-circle" aria-hidden="true"></i> {% trans 'Add User' %}
         </button>
       </a>
     </div>
@@ -31,9 +32,9 @@
     </table>
     {% else %}
       <div class="col-md-12 text-center">
-        <p>No user found</p>
+        <p>{% trans 'No user found' %}</p>
         <a href="{% url 'zkcluster:user_add' %}">
-          <button class="btn btn-default">Add User</button>
+          <button class="btn btn-default">{% trans 'Add User' %}</button>
         </a>
       </div>
   {% endif %}

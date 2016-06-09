@@ -1,4 +1,5 @@
 {% extends 'zkcluster/base.html' %}
+{% load i18n %}
 
 {% block content %}
   <div class="row">
@@ -15,7 +16,7 @@
           <span class="error">{{ form.port.errors.0 }}</span>
           {{ form.port }}
         </div>
-        <button type="submit" class="btn btn-primary">Scan</button>
+        <button type="submit" class="btn btn-primary">{% trans 'Scan' %}</button>
       </form>
     </div>
   </div>

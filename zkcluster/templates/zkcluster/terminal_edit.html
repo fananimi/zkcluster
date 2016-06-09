@@ -6,13 +6,13 @@
     <div class="col-md-3">
       <ul class="nav nav-pills nav-stacked">
         <li class="active">
-          <a data-toggle="tab" href="#edit">Edit</a>
+          <a data-toggle="tab" href="#edit">{% trans 'Edit' %}</a>
         </li>
         <li>
-          <a data-toggle="tab" href="#action">Action</a>
+          <a data-toggle="tab" href="#action">{% trans 'Action' %}</a>
         </li>
         <li>
-          <a data-toggle="tab" href="#danger">Danger Zone</a>
+          <a data-toggle="tab" href="#danger">{% trans 'Danger Zone' %}</a>
         </li>
       </ul>
     </div>
@@ -44,7 +44,7 @@
               {{ form.name }}
             </div>
             <div class="center">
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
             </div>
           </form>
         </div>
@@ -52,15 +52,15 @@
       </div>
       <div id="action" class="tab-pane fade in">
         <div class="panel panel-success">
-          <div class="panel-heading">Restart Terminal : {{ terminal.name }}</div>
+          <div class="panel-heading">{% trans 'Restart Terminal' %} : {{ terminal.name }}</div>
           <div class="panel-body center">
-            <button class="btn btn-success">Restart</button>
+            <button class="btn btn-success">{% trans 'Restart' %}</button>
           </div>
         </div>
         <div class="panel panel-default">
-          <div class="panel-heading">Shutdown Terminal : {{ terminal.name }}</div>
+          <div class="panel-heading">{% trans 'Shutdown Terminal' %} : {{ terminal.name }}</div>
           <div class="panel-body center">
-            <button class="btn btn-default">Power off</button>
+            <button class="btn btn-default">{% trans 'Power off' %}</button>
           </div>
         </div>
       </div>
@@ -68,13 +68,13 @@
         <div class="panel panel-danger">
           <div class="panel-heading">Delete All User : {{ terminal.name }}</div>
           <div class="panel-body center">
-            <button class="btn btn-danger">Delete</button>
+            <button class="btn btn-danger">{% trans 'Delete' %}</button>
           </div>
         </div>
         <div class="panel panel-danger">
-          <div class="panel-heading">Delete Terminal : {{ terminal.name }}</div>
+          <div class="panel-heading">{% trans 'Delete Terminal' %} : {{ terminal.name }}</div>
           <div class="panel-body center">
-            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirm">Delete</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirm">{% trans 'Delete' %}</button>
           </div>
         </div>
       </div>
@@ -89,18 +89,18 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{% trans "Are you ABSOLUTELY sure?" %}</h4>
+        <h4 class="modal-title">{% trans 'Are you ABSOLUTELY sure?' %}</h4>
       </div>
       <div class="modal-body">
         <form method="POST" action="{% url 'zkcluster:terminal_delete' terminal.id %}">
           {% csrf_token %}
           <div class="form-group">
             <span>
-              {% trans "This action" %} <b>{% trans "CANNOT" %}</b> {% trans "be undone" %}. {% trans "This will permanently delete the" %} <b>{{ terminal.name }}</b> {% trans "include the all related user of them" %}.
+              {% trans 'This action' %} <b>{% trans 'CANNOT' %}</b> {% trans 'be undone' %}. {% trans 'This will permanently delete the' %} <b>{{ terminal.name }}</b> {% trans 'include the all related user of them' %}.
             </span>
             <br/>
             <label for="name">
-              {% trans "Please type in the name of the terminal to confirm" %}
+              {% trans 'Please type in the name of the terminal to confirm' %}
             </label>
             <input autocomplete="off" class="form-control" id="field_confirm" name="name" type="text"/>
           </div>
@@ -108,7 +108,7 @@
       </div>
       <div class="modal-footer center">
         <button type="button" id="buttonConfirm" class="btn btn-danger" data-dismiss="modal" disabled>
-          {% trans "I understand the consequences, delete this repository" %}
+          {% trans 'I understand the consequences, delete this repository' %}
         </button>
       </div>
     </div>

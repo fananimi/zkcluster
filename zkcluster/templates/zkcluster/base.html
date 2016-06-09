@@ -1,8 +1,11 @@
 {% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
-<html lang="en-us" >
+<html lang="en">
   <head>
     <title>zkculster</title>
+    <meta charset="utf-8">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" type="text/css" href="{% static "zkcluster/bootstrap/css/bootstrap.min.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "zkcluster/font-awesome/css/font-awesome.min.css" %}" />
@@ -27,24 +30,24 @@
                 <ul class="nav navbar-nav">
                   <li {% if request.path == '/zkcluster/dashboard/' %}class="active"{% endif %}>
                     <a href="{% url 'zkcluster:dashboard' %}">
-                      <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard
+                      <i class="fa fa-tachometer" aria-hidden="true"></i> {% trans 'Dashboard' %}
                     </a>
                   </li>
                   <li {% if request.path == '/zkcluster/terminal/' %}class="active"{% endif %}>
                     <a href="{% url 'zkcluster:terminal' %}">
-                      <i class="fa fa-wrench" aria-hidden="true"></i> Terminal
+                      <i class="fa fa-wrench" aria-hidden="true"></i> {% trans 'Terminal' %}
                     </a>
                   </li>
                   <li {% if request.path == '/zkcluster/user/' %}class="active"{% endif %}>
                     <a href="{% url 'zkcluster:user' %}">
-                      <i class="fa fa-user" aria-hidden="true"></i> User
+                      <i class="fa fa-user" aria-hidden="true"></i> {% trans 'User' %}
                     </a>
                   </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li>
                     <a href="#">
-                      <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                      <i class="fa fa-sign-out" aria-hidden="true"></i> {% trans 'Logout' %}
                     </a>
                   </li>
                 </ul>
@@ -64,7 +67,7 @@
       </div>
     </div>
     <div class="container">
-      <footer class="site-footer">copyright 2016 &copy; zkcluster</footer>
+      <footer class="site-footer">{% trans 'Copyright' %} 2016 &copy; zkcluster</footer>
     </div>
     <!-- js block -->
     <script src="{% static "zkcluster/jquery/jquery-1.12.4.min.js" %}"></script>
