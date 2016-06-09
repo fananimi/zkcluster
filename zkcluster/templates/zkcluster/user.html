@@ -1,0 +1,40 @@
+{% extends 'zkcluster/base.html' %}
+
+{% block content %}
+  {% if users %}
+    <div style="margin-bottom: 10px;">
+      <a href="{% url 'zkcluster:user_add' %}">
+        <button class="btn btn-default">
+          <i class="fa fa-plus-circle" aria-hidden="true"> Add User</i>
+        </button>
+      </a>
+    </div>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Privilege</th>
+          <th>Terminal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <th scope="row">{{ user.id }}</th>
+            <td>{{ user.name }}</td>
+            <td>{{ user.privilege }}</td>
+            <td>{{ user.terminal }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <div class="col-md-12 text-center">
+        <p>No user found</p>
+        <a href="{% url 'zkcluster:user_add' %}">
+          <button class="btn btn-default">Add User</button>
+        </a>
+      </div>
+  {% endif %}
+{% endblock %}

@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^terminal/save$', views.terminal_save, name='terminal_save'),
     url(r'^terminal/add$', views.terminal_add, name='terminal_add'),
     url(r'^terminal/edit/(?P<terminal_id>[0-9]+)/$', views.terminal_edit, name='terminal_edit'),
-    url(r'^terminal/delete/(?P<terminal_id>[0-9]+)/$', views.terminal_delete, name='terminal_delete')
+    url(r'^terminal/delete/(?P<terminal_id>[0-9]+)/$', views.terminal_delete, name='terminal_delete'),
+    url(r'^user/$', views.user, name='user'),
+    url(r'^user/add/$', views.user_add, name='user_add')
 ]

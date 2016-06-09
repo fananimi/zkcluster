@@ -35,6 +35,11 @@
                       <i class="fa fa-wrench" aria-hidden="true"> Terminal</i>
                     </a>
                   </li>
+                  <li {% if request.path == '/zkcluster/user/' %}class="active"{% endif %}>
+                    <a href="{% url 'zkcluster:user' %}">
+                      <i class="fa fa-user" aria-hidden="true"> User</i>
+                    </a>
+                  </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li>
