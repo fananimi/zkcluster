@@ -7,12 +7,15 @@ from django.views.decorators.http import require_http_methods as alowed
 from .models import Terminal
 from .forms import ScanTerminal, SaveTerminal
 
+@alowed(['GET'])
 def index(request):
     return render(request, 'zkcluster/index.html')
 
+@alowed(['GET'])
 def dashboard(request):
     return render(request, 'zkcluster/dashboard.html')
 
+@alowed(['GET'])
 def terminal(request):
     terminals = Terminal.objects.all()
     data = {
