@@ -84,6 +84,13 @@ class SaveTerminal(forms.ModelForm, ScanTerminal):
             raise forms.ValidationError(_('Serial number already exists'))
         return serialnumber
 
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if self.validate_name:
+            if not name:
+                raise forms.ValidationError(_('This field is required.'))
+        return name
+
     class Meta:
         model = Terminal
         fields = ('ip', 'port', 'serialnumber', 'name')
