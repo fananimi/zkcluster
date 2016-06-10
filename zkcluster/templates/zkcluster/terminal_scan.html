@@ -16,8 +16,17 @@
           <span class="error">{{ form.port.errors.0 }}</span>
           {{ form.port }}
         </div>
-        <button type="submit" class="btn btn-primary">{% trans 'Scan' %}</button>
+        <button id="id_submit" type="submit" class="btn btn-primary">{% trans 'Scan' %}</button>
       </form>
     </div>
   </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    $('#id_ip').focus();
+    $('form').submit(function(){
+      $(this).find(':submit').attr('disabled','disabled').html('Saving...');;
+    });
+  </script>
 {% endblock %}

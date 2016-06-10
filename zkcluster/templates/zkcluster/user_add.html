@@ -26,8 +26,17 @@
           <span class="error">{{ form.terminal.errors.0 }}</span>
           {{ form.terminal }}
         </div>
-        <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+        <button id="id_submit" type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
       </form>
     </div>
   </div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    $('#id_name').focus();
+    $('form').submit(function(){
+      $(this).find(':submit').attr('disabled','disabled').html('Saving...');;
+    });
+  </script>
 {% endblock %}
