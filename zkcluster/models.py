@@ -73,10 +73,6 @@ class Terminal(models.Model):
 def pre_delete_terminal(sender, **kwargs):
     instance = kwargs['instance']
     instance.zk_connect()
-
-@receiver(post_delete, sender=Terminal)
-def on_delete_terminal(sender, **kwargs):
-    instance = kwargs['instance']
     instance.zk_voice()
     instance.zk_clear_data()
 
