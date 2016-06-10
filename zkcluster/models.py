@@ -1,12 +1,11 @@
 from __future__ import unicode_literals
 
 import zk
+from zk.exception import ZKError
 from django.db.models.signals import post_save, pre_delete, post_delete
 from django.dispatch.dispatcher import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-
-from .exceptions import ZKError
 
 class Terminal(models.Model):
     name = models.CharField(_('name'), max_length=200)
@@ -25,15 +24,12 @@ class Terminal(models.Model):
         ip = self.ip
         port = self.port
         terminal = zk.ZK(ip, port, 5)
-        try:
-            conn = terminal.connect()
-            if conn:
-                terminal.disable_device()
-                self.zkconn = terminal
-            else:
-                raise ZKError(_('can\'t connect to terminal'))
-        except Exception, e:
-            raise ZKError(str(e))
+        conn = terminal.connect()
+        if conn:
+            terminal.disable_device()
+            self.zkconn = terminal
+        else:
+            raise ZKError(_('can\'t connect to terminal'))
 
     def zk_disconnect(self):
         if not self.zkconn:

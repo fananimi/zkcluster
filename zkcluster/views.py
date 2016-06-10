@@ -1,5 +1,6 @@
-import zk
 import urlparse
+import zk
+from zk.exception import ZKError
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
@@ -7,7 +8,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods as alowed
 
-from .exceptions import ZKError
 from .forms import ScanTerminal, SaveTerminal, EditTerminal, UserForm
 from .models import Terminal, User
 
