@@ -41,6 +41,16 @@ class Terminal(models.Model):
         self.zkconn.enable_device()
         self.zkconn.disconnect()
 
+    def zk_restart(self):
+        if not self.zkconn:
+            raise ZKError(_('terminal connection error'))
+        self.zkconn.restart()
+
+    def zk_poweroff(self):
+        if not self.zkconn:
+            raise ZKError(_('terminal connection error'))
+        self.zkconn.poweroff()
+
     def zk_voice(self):
         if not self.zkconn:
             raise ZKError(_('terminal connection error'))

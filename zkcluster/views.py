@@ -111,11 +111,37 @@ def terminal_delete(request, terminal_id):
 
     return redirect('zkcluster:terminal')
 
+@alowed(['POST'])
+def terminal_restart(request, terminal_id):
+    terminal = get_object_or_404(Terminal, pk=terminal_id)
+    try:
+        terminal.zk_connect()
+        terminal.zk_restart()
+    except ZKError, e:
+        messages.add_message(request, messages.ERROR, str(e))
+
+    return redirect('zkcluster:terminal')
+
+@alowed(['POST'])
+def terminal_poweroff(request, terminal_id):
+    terminal = get_object_or_404(Terminal, pk=terminal_id)
+    try:
+        terminal.zk_connect()
+        terminal.zk_poweroff()
+    except ZKError, e:
+        messages.add_message(request, messages.ERROR, str(e))
+
+    return redirect('zkcluster:terminal')
+
 @alowed(['GET', 'POST'])
 @login_required
 def terminal_action(request, action, terminal_id):
     if action == 'edit':
         return terminal_edit(request, terminal_id)
+    elif action == 'restart':
+        return terminal_restart(request, terminal_id)
+    elif action == 'poweroff':
+        return terminal_poweroff(request, terminal_id)
     elif action == 'delete':
         return terminal_delete(request, terminal_id)
     else:

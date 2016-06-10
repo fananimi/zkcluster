@@ -51,18 +51,28 @@
         </div>
       </div>
       <div id="action" class="tab-pane fade in">
-        <div class="panel panel-success">
-          <div class="panel-heading">{% trans 'Restart Terminal' %} : {{ terminal.name }}</div>
-          <div class="panel-body center">
-            <button class="btn btn-success">{% trans 'Restart' %}</button>
+        <form id="form_restart" method="POST" action="{% url 'zkcluster:terminal_action' 'restart' terminal.id %}">
+          {% csrf_token %}
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              {% trans 'Restart Terminal' %} : {{ terminal.name }}
+            </div>
+            <div class="panel-body center">
+              <button class="btn btn-success">{% trans 'Restart' %}</button>
+            </div>
           </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">{% trans 'Shutdown Terminal' %} : {{ terminal.name }}</div>
-          <div class="panel-body center">
-            <button class="btn btn-default">{% trans 'Power off' %}</button>
+        </form>
+        <form id="form_poweroff" method="POST" action="{% url 'zkcluster:terminal_action' 'poweroff' terminal.id %}">
+          {% csrf_token %}
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              {% trans 'Shutdown Terminal' %} : {{ terminal.name }}
+            </div>
+            <div class="panel-body center">
+              <button class="btn btn-default">{% trans 'Power off' %}</button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
       <div id="danger" class="tab-pane fade in">
         <div class="panel panel-danger">
@@ -127,6 +137,12 @@
       if (link == '#edit'){
         $('#id_ip').focus();
       };
+    });
+    $('form#form_restart').submit(function(){
+      $(this).find(':submit').prop('disabled', true).html('Restarting...');
+    });
+    $('form#form_poweroff').submit(function(){
+      $(this).find(':submit').prop('disabled', true).html('Shutting down...');
     });
     // on delete submit
     $('#deleteConfirm').on('shown.bs.modal', function () {
