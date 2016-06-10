@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import zk
 from zk.exception import ZKError
-from django.db.models.signals import post_save, pre_delete, post_delete
+from django.db.models.signals import pre_save, pre_delete
 from django.dispatch.dispatcher import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -95,22 +95,20 @@ class User(models.Model):
     def __unicode__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        try:
-            latest_user = User.objects.filter(terminal=self.terminal).latest('id')
-            uid = latest_user.uid + 1
-        except User.DoesNotExist:
-            uid = 1
-
-        self.uid = uid
-        self.terminal.zk_connect()
-        super(User, self).save(*args, **kwargs)
-
-@receiver(post_save, sender=User)
-def on_save_user(sender, **kwargs):
+@receiver(pre_save, sender=User)
+def pre_save_user(sender, **kwargs):
     instance = kwargs['instance']
+    try:
+        latest_user = User.objects.filter(terminal=instance.terminal).latest('id')
+        uid = latest_user.uid + 1
+    except User.DoesNotExist:
+        uid = 1
+
+    instance.uid = uid
+
+    instance.terminal.zk_connect()
     instance.terminal.zk_setuser(
-        instance.id,
+        instance.uid,
         instance.name,
         instance.privilege,
         instance.password,
