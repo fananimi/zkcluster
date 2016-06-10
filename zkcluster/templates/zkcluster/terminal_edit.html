@@ -21,7 +21,7 @@
         <div class="panel panel-primary">
           <div class="panel-heading">Terminal : {{ terminal.name }}</div>
         <div class="panel-body">
-          <form method="POST" action="">
+          <form id="form_update" method="POST" action="">
             {% csrf_token %}
             <div class="form-group">
               <label for="{{ form.email.auto_id }}">{{ form.ip.label }}</label>
@@ -86,13 +86,13 @@
 <!-- delete confirmation -->
 <div id="deleteConfirm" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{% trans 'Are you ABSOLUTELY sure?' %}</h4>
-      </div>
-      <div class="modal-body">
-        <form method="POST" action="{% url 'zkcluster:terminal_action' terminal.id 'delete' %}">
+    <form id="form_delete" method="POST" action="{% url 'zkcluster:terminal_action' 'delete' terminal.id %}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{% trans 'Are you ABSOLUTELY sure?' %}</h4>
+        </div>
+        <div class="modal-body">
           {% csrf_token %}
           <div class="form-group">
             <span>
@@ -104,14 +104,14 @@
             </label>
             <input autocomplete="off" class="form-control" id="field_confirm" name="name" type="text"/>
           </div>
-        </form>
+        </div>
+        <div class="modal-footer center">
+          <button type="submit" id="buttonConfirm" class="btn btn-danger" disabled>
+            {% trans 'I understand the consequences, delete this repository' %}
+          </button>
+        </div>
       </div>
-      <div class="modal-footer center">
-        <button type="button" id="buttonConfirm" class="btn btn-danger" data-dismiss="modal" disabled>
-          {% trans 'I understand the consequences, delete this repository' %}
-        </button>
-      </div>
-    </div>
+    </form>
   </div>
 </div>
 {% endblock %}
@@ -119,6 +119,16 @@
 {% block script %}
   <script>
     var terminal_name = '{{ terminal.name }}';
+    // auto focus on page loaded
+    $('#id_ip').focus();
+    // on tab changed event
+    $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+      var link = $(this).attr('href');
+      if (link == '#edit'){
+        $('#id_ip').focus();
+      };
+    });
+    // on delete submit
     $('#deleteConfirm').on('shown.bs.modal', function () {
       $('#field_confirm').focus();
     });
@@ -129,6 +139,9 @@
       } else {
         $('#buttonConfirm').prop('disabled', true);
       };
+    });
+    $('form#form_delete').submit(function(){
+      $(this).find(':submit').prop('disabled', true).html('Deleting...');
     });
   </script>
 {% endblock %}

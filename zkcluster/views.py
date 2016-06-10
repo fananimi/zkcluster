@@ -2,6 +2,7 @@ import zk
 import urlparse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods as alowed
@@ -88,26 +89,37 @@ def terminal_add(request):
 
 @alowed(['GET', 'POST'])
 @login_required
-def terminal_action(request, terminal_id, action):
-    if action == 'edit':
-        terminal = get_object_or_404(Terminal, pk=terminal_id)
-        form = EditTerminal(request.POST or None, instance=terminal)
-        if request.POST and form.is_valid():
-            form.save()
-            return redirect('zkcluster:terminal')
-        data = {
-            'terminal': terminal,
-            'form': form
-        }
-        return render(request, 'zkcluster/terminal_edit.html', data)
-    elif action == 'delete':
-        terminal = get_object_or_404(Terminal, pk=terminal_id)
-        try:
-            terminal.delete()
-        except ZKError, e:
-            messages.add_message(request, messages.ERROR, str(e))
-
+def terminal_edit(request, terminal_id):
+    terminal = get_object_or_404(Terminal, pk=terminal_id)
+    form = EditTerminal(request.POST or None, instance=terminal)
+    if request.POST and form.is_valid():
+        form.save()
         return redirect('zkcluster:terminal')
+    data = {
+        'terminal': terminal,
+        'form': form
+    }
+    return render(request, 'zkcluster/terminal_edit.html', data)
+
+@alowed(['POST'])
+def terminal_delete(request, terminal_id):
+    terminal = get_object_or_404(Terminal, pk=terminal_id)
+    try:
+        terminal.delete()
+    except ZKError, e:
+        messages.add_message(request, messages.ERROR, str(e))
+
+    return redirect('zkcluster:terminal')
+
+@alowed(['GET', 'POST'])
+@login_required
+def terminal_action(request, action, terminal_id):
+    if action == 'edit':
+        return terminal_edit(request, terminal_id)
+    elif action == 'delete':
+        return terminal_delete(request, terminal_id)
+    else:
+        raise Http404("Action doest not allowed")
 
 @alowed(['GET', 'POST'])
 @login_required
