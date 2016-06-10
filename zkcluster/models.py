@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import zk
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete, post_delete
 from django.dispatch.dispatcher import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -57,6 +57,22 @@ class Terminal(models.Model):
             password=str(password),
             user_id=str(user_id)
         )
+
+    def zk_clear_data(self):
+        if not self.zkconn:
+            raise ZKError(_('terminal connection error'))
+        self.zkconn.clear_data()
+
+@receiver(pre_delete, sender=Terminal)
+def pre_delete_terminal(sender, **kwargs):
+    instance = kwargs['instance']
+    instance.zk_connect()
+
+@receiver(post_delete, sender=Terminal)
+def on_delete_terminal(sender, **kwargs):
+    instance = kwargs['instance']
+    instance.zk_voice()
+    instance.zk_clear_data()
 
 class User(models.Model):
     USER_DEFAULT        = 0

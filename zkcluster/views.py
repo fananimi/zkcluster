@@ -104,7 +104,11 @@ def terminal_edit(request, terminal_id):
 @login_required
 def terminal_delete(request, terminal_id):
     terminal = get_object_or_404(Terminal, pk=terminal_id)
-    terminal.delete()
+    try:
+        terminal.delete()
+    except ZKError, e:
+        messages.add_message(request, messages.ERROR, str(e))
+
     return redirect('zkcluster:terminal')
 
 @alowed(['GET', 'POST'])
