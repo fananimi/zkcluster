@@ -106,7 +106,7 @@
           {% csrf_token %}
           <div class="form-group">
             <span>
-              {% trans 'This action' %} <b>{% trans 'CANNOT' %}</b> {% trans 'be undone' %}. {% trans 'This will permanently delete the' %} <b>{{ terminal.name }}</b> {% trans 'include the all related user of them' %}.
+              {% trans 'This action' %} <b>{% trans 'CANNOT' %}</b> {% trans 'be undone' %}. {% trans 'This will permanently delete the' %} <b>{{ terminal.name }}</b> {% trans 'include all the related users of them' %}.
             </span>
             <br/>
             <label for="name">

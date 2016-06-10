@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-10 07:29+0000\n"
+"POT-Creation-Date: 2016-06-10 07:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -251,8 +251,8 @@ msgid "This will permanently delete the"
 msgstr "Ini akan menghapus secara permanen"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:109
-msgid "include the all related user of them"
-msgstr "termasuk semua user dan yang berhubungan"
+msgid "include all the related users of them"
+msgstr "termasuk semua user yang berhubungan"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:113
 msgid "Please type in the name of the terminal to confirm"
