@@ -128,6 +128,7 @@ def terminal_poweroff(request, terminal_id):
     try:
         terminal.zk_connect()
         terminal.zk_poweroff()
+        terminal.zk_disconnect()
     except ZKError, e:
         messages.add_message(request, messages.ERROR, str(e))
 
