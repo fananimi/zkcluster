@@ -13,16 +13,18 @@
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Privilege</th>
-          <th>Terminal</th>
+          <th>{% trans 'ID' %}</th>
+          <th>{% trans 'UID' %}</th>
+          <th>{% trans 'Name' %}</th>
+          <th>{% trans 'Privilege' %}</th>
+          <th>{% trans 'Terminal' %}</th>
         </tr>
       </thead>
       <tbody>
         {% for user in users %}
           <tr>
             <th scope="row">{{ user.id }}</th>
+            <td>{{ user.uid }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.privilege }}</td>
             <td>{{ user.terminal }}</td>

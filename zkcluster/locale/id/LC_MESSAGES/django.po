@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-10 01:16+0000\n"
+"POT-Creation-Date: 2016-06-10 03:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,7 @@ msgstr "Nomor seri"
 
 #: public/zkcluster/zkcluster/forms.py:49
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:17
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:18
 msgid "Name"
 msgstr "Nama"
 
@@ -71,7 +72,7 @@ msgid "Enter a whole number."
 msgstr "Masukkan angka bulat"
 
 #: public/zkcluster/zkcluster/models.py:12
-#: public/zkcluster/zkcluster/models.py:29
+#: public/zkcluster/zkcluster/models.py:30
 msgid "name"
 msgstr "nama"
 
@@ -96,19 +97,23 @@ msgstr "Pengguna"
 msgid "Administrator"
 msgstr "Administrator"
 
-#: public/zkcluster/zkcluster/models.py:30
+#: public/zkcluster/zkcluster/models.py:29
+msgid "uid"
+msgstr "uid"
+
+#: public/zkcluster/zkcluster/models.py:31
 msgid "privilege"
 msgstr "hak akses"
 
-#: public/zkcluster/zkcluster/models.py:31
+#: public/zkcluster/zkcluster/models.py:32
 msgid "password"
 msgstr "Kata Sandi"
 
-#: public/zkcluster/zkcluster/models.py:32
+#: public/zkcluster/zkcluster/models.py:33
 msgid "group id"
 msgstr "id grup"
 
-#: public/zkcluster/zkcluster/models.py:50
+#: public/zkcluster/zkcluster/models.py:59
 #: public/zkcluster/zkcluster/views.py:74
 msgid "can't connect to terminal"
 msgstr "tidka dapat terhubung ke terminal"
@@ -119,6 +124,7 @@ msgid "Dashboard"
 msgstr "Dasbor"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/base.html:38
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:20
 msgid "Terminal"
 msgstr "Terminal"
 
@@ -148,6 +154,7 @@ msgid "Add Terminal"
 msgstr "Tambah Terminal"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:16
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:16
 msgid "ID"
 msgstr "ID"
 
@@ -251,10 +258,18 @@ msgid "Scan"
 msgstr "Pindai"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/user.html:9
-#: public/zkcluster/zkcluster/templates/zkcluster/user.html:37
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:39
 msgid "Add User"
 msgstr "Tambah Pengguna"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/user.html:35
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:17
+msgid "UID"
+msgstr "UID"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:19
+msgid "Privilege"
+msgstr "hak akses"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:37
 msgid "No user found"
 msgstr "Pengguna tidak tersedia"

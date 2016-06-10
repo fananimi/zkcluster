@@ -26,6 +26,7 @@ class User(models.Model):
         (USER_ADMIN, _('Administrator'))
     )
 
+    uid = models.IntegerField(_('uid'))
     name = models.CharField(_('name'), max_length=28)
     privilege = models.SmallIntegerField(_('privilege'), choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(_('password'), max_length=8, blank=True, null=True)
@@ -36,6 +37,14 @@ class User(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        try:
+            latest_user = User.objects.filter(terminal=self.terminal).latest('id')
+            uid = latest_user.uid + 1
+        except User.DoesNotExist:
+            uid = 1
+
+        self.uid = uid
+
         # connect to terminal
         ip = self.terminal.ip
         port = self.terminal.port
