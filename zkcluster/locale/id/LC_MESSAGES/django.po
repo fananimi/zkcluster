@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-10 01:08+0000\n"
+"POT-Creation-Date: 2016-06-10 01:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,7 +143,7 @@ msgid "Welcome"
 msgstr "Terima kasih"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:9
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:64
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:69
 msgid "Add Terminal"
 msgstr "Tambah Terminal"
 
@@ -175,7 +175,11 @@ msgstr "Muat Ulang"
 msgid "Power Off"
 msgstr "Matikan Daya"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:62
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:55
+msgid "Test Sound"
+msgstr "Tes Suara"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:67
 msgid "No terminal found"
 msgstr "Terminal tidak tersedia"
 
