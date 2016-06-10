@@ -44,7 +44,7 @@
               {{ form.name }}
             </div>
             <div class="center">
-              <button type="submit" class="btn btn-primary">{% trans 'Save' %}</button>
+              <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
             </div>
           </form>
         </div>
@@ -76,7 +76,7 @@
       </div>
       <div id="danger" class="tab-pane fade in">
         <div class="panel panel-danger">
-          <div class="panel-heading">Delete All User : {{ terminal.name }}</div>
+          <div class="panel-heading">{% trans "Delete All User" %} : {{ terminal.name }}</div>
           <div class="panel-body center">
             <button class="btn btn-danger">{% trans 'Delete' %}</button>
           </div>
@@ -117,7 +117,7 @@
         </div>
         <div class="modal-footer center">
           <button type="submit" id="buttonConfirm" class="btn btn-danger" disabled>
-            {% trans 'I understand the consequences, delete this repository' %}
+            {% trans 'I understand the consequences, delete this terminal' %}
           </button>
         </div>
       </div>
@@ -138,11 +138,14 @@
         $('#id_ip').focus();
       };
     });
+    $('form#form_update').submit(function(){
+      $(this).find(':submit').prop('disabled', true).html('{% trans "Updating..." %}');
+    });
     $('form#form_restart').submit(function(){
-      $(this).find(':submit').prop('disabled', true).html('Restarting...');
+      $(this).find(':submit').prop('disabled', true).html('{% trans "Restarting..." %}');
     });
     $('form#form_poweroff').submit(function(){
-      $(this).find(':submit').prop('disabled', true).html('Shutting down...');
+      $(this).find(':submit').prop('disabled', true).html('{% trans "Shutting down..." %}');
     });
     // on delete submit
     $('#deleteConfirm').on('shown.bs.modal', function () {
@@ -157,7 +160,7 @@
       };
     });
     $('form#form_delete').submit(function(){
-      $(this).find(':submit').prop('disabled', true).html('Deleting...');
+      $(this).find(':submit').prop('disabled', true).html('{% trans "Deleting..." %}');
     });
   </script>
 {% endblock %}

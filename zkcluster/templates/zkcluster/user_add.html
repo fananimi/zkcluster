@@ -36,7 +36,7 @@
   <script>
     $('#id_name').focus();
     $('form').submit(function(){
-      $(this).find(':submit').attr('disabled','disabled').html('Saving...');;
+      $(this).find(':submit').attr('disabled','disabled').html('{% trans "Saving..." %}');;
     });
   </script>
 {% endblock %}

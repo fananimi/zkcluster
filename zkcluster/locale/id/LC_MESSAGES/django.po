@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-10 07:33+0000\n"
+"POT-Creation-Date: 2016-06-10 07:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -204,10 +204,8 @@ msgid "Danger Zone"
 msgstr "Zona Bahaya"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:47
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal_save.html:29
-#: public/zkcluster/zkcluster/templates/zkcluster/user_add.html:29
-msgid "Save"
-msgstr "Simpan"
+msgid "Update"
+msgstr "Ubah"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:58
 msgid "Restart Terminal"
@@ -220,6 +218,10 @@ msgstr "Matikan Daya Terminal"
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:72
 msgid "Power off"
 msgstr "Matikan Daya"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:79
+msgid "Delete All User"
+msgstr "Hapus Semua User"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:81
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:87
@@ -259,8 +261,29 @@ msgid "Please type in the name of the terminal to confirm"
 msgstr "Mohon ketikan nama terminal untuk konfirmasi"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:120
-msgid "I understand the consequences, delete this repository"
-msgstr "Saya menyadari dampaknya, hapus repository ini"
+msgid "I understand the consequences, delete this terminal"
+msgstr "Saya menyadari dampaknya, hapus terminal ini"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:142
+msgid "Updating..."
+msgstr "Mengubah..."
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:145
+msgid "Restarting..."
+msgstr "Muat Ulang..."
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:148
+msgid "Shutting down..."
+msgstr "Mematikan..."
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:163
+msgid "Deleting..."
+msgstr "Sedang menghapus..."
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_save.html:29
+#: public/zkcluster/zkcluster/templates/zkcluster/user_add.html:29
+msgid "Save"
+msgstr "Simpan"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_scan.html:19
 msgid "Scan"
@@ -282,3 +305,7 @@ msgstr "hak akses"
 #: public/zkcluster/zkcluster/templates/zkcluster/user.html:37
 msgid "No user found"
 msgstr "Pengguna tidak tersedia"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/user_add.html:39
+msgid "Saving..."
+msgstr "Meyimpan..."
