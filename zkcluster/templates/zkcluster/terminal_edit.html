@@ -92,7 +92,7 @@
         <h4 class="modal-title">{% trans 'Are you ABSOLUTELY sure?' %}</h4>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{% url 'zkcluster:terminal_delete' terminal.id %}">
+        <form method="POST" action="{% url 'zkcluster:terminal_action' terminal.id 'delete' %}">
           {% csrf_token %}
           <div class="form-group">
             <span>

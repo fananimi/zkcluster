@@ -88,28 +88,26 @@ def terminal_add(request):
 
 @alowed(['GET', 'POST'])
 @login_required
-def terminal_edit(request, terminal_id):
-    terminal = get_object_or_404(Terminal, pk=terminal_id)
-    form = EditTerminal(request.POST or None, instance=terminal)
-    if request.POST and form.is_valid():
-        form.save()
+def terminal_action(request, terminal_id, action):
+    if action == 'edit':
+        terminal = get_object_or_404(Terminal, pk=terminal_id)
+        form = EditTerminal(request.POST or None, instance=terminal)
+        if request.POST and form.is_valid():
+            form.save()
+            return redirect('zkcluster:terminal')
+        data = {
+            'terminal': terminal,
+            'form': form
+        }
+        return render(request, 'zkcluster/terminal_edit.html', data)
+    elif action == 'delete':
+        terminal = get_object_or_404(Terminal, pk=terminal_id)
+        try:
+            terminal.delete()
+        except ZKError, e:
+            messages.add_message(request, messages.ERROR, str(e))
+
         return redirect('zkcluster:terminal')
-    data = {
-        'terminal': terminal,
-        'form': form
-    }
-    return render(request, 'zkcluster/terminal_edit.html', data)
-
-@alowed(['GET', 'POST'])
-@login_required
-def terminal_delete(request, terminal_id):
-    terminal = get_object_or_404(Terminal, pk=terminal_id)
-    try:
-        terminal.delete()
-    except ZKError, e:
-        messages.add_message(request, messages.ERROR, str(e))
-
-    return redirect('zkcluster:terminal')
 
 @alowed(['GET', 'POST'])
 @login_required

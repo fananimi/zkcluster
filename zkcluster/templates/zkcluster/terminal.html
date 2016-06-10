@@ -36,7 +36,7 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="{% url 'zkcluster:terminal_edit' terminal.id %}">
+                    <a href="{% url 'zkcluster:terminal_action' terminal.id 'edit' %}">
                       <i class="fa fa-edit" aria-hidden="true"></i> {% trans 'Edit' %}
                     </a>
                   </li>
