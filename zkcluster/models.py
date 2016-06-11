@@ -22,6 +22,15 @@ class Terminal(models.Model):
     def __unicode__(self):
         return self.name
 
+    def format(self):
+        '''
+        not implemented yet
+        '''
+        # self.zk_connect()
+        # self.zk_voice()
+        # self.zk_clear_data()
+        # self.users.all().delete()
+
     def zk_connect(self):
         ip = self.ip
         port = self.port
@@ -99,14 +108,6 @@ def on_save_terminal(sender, **kwargs):
     if not counter:
         UIDCounter.objects.create(next_uid=1, terminal=instance)
 
-# delete all correspondence data
-@receiver(pre_delete, sender=Terminal)
-def pre_delete_terminal(sender, **kwargs):
-    instance = kwargs['instance']
-    instance.zk_connect()
-    instance.zk_voice()
-    instance.zk_clear_data()
-
 class DeletedUID(models.Model):
     uid = models.IntegerField()
     terminal = models.ForeignKey(Terminal, related_name='deleted_uids')
@@ -135,7 +136,7 @@ class User(models.Model):
     privilege = models.SmallIntegerField(_('privilege'), choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(_('password'), max_length=8, blank=True, null=True)
     group_id = models.CharField(_('group id'), max_length=7, blank=True, null=True)
-    terminal = models.ForeignKey(Terminal, related_name='zkuser')
+    terminal = models.ForeignKey(Terminal, related_name='users')
 
     def get_privilege_name(self):
         if self.privilege == self.USER_ADMIN:

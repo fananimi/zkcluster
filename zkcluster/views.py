@@ -98,6 +98,16 @@ def terminal_edit(request, terminal_id):
     return render(request, 'zkcluster/terminal_edit.html', data)
 
 @alowed(['POST'])
+def terminal_format(request, terminal_id):
+    terminal = get_object_or_404(Terminal, pk=terminal_id)
+    try:
+        terminal.format()
+    except ZKError, e:
+        messages.add_message(request, messages.ERROR, str(e))
+
+    return redirect('zkcluster:terminal')
+
+@alowed(['POST'])
 def terminal_delete(request, terminal_id):
     terminal = get_object_or_404(Terminal, pk=terminal_id)
     try:
@@ -153,6 +163,8 @@ def terminal_action(request, action, terminal_id):
         return terminal_poweroff(request, terminal_id)
     elif action == 'voice':
         return terminal_voice(request, terminal_id)
+    elif action == 'format':
+        return terminal_format(request, terminal_id)
     elif action == 'delete':
         return terminal_delete(request, terminal_id)
     else:

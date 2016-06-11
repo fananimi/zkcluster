@@ -84,7 +84,7 @@
         <div class="panel panel-danger">
           <div class="panel-heading">{% trans 'Delete Terminal' %} : {{ terminal.name }}</div>
           <div class="panel-body center">
-            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirm">{% trans 'Delete' %}</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirm">{% trans 'Format' %}</button>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@
 <!-- delete confirmation -->
 <div id="deleteConfirm" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <form id="form_delete" method="POST" action="{% url 'zkcluster:terminal_action' 'delete' terminal.id %}">
+    <form id="form_delete" method="POST" action="{% url 'zkcluster:terminal_action' 'format' terminal.id %}">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
