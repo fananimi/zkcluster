@@ -72,6 +72,11 @@ class Terminal(models.Model):
             user_id=str(user_id)
         )
 
+    def zk_delete_user(self, uid):
+        if not self.zkconn:
+            raise ZKError(_('terminal connection error'))
+        self.zkconn.delete_user(uid)
+
     def zk_clear_data(self):
         if not self.zkconn:
             raise ZKError(_('terminal connection error'))
