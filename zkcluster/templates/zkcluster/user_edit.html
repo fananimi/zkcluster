@@ -1,0 +1,35 @@
+{% extends 'zkcluster/base.html' %}
+{% load i18n %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-6">
+      <form id="form_update" method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="{{ form.name.auto_id }}">{{ form.name.label }}</label>
+          <span class="error">{{ form.name.errors.0 }}</span>
+          {{ form.name }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.privilege.auto_id }}">{{ form.privilege.label }}</label>
+          <span class="error">{{ form.privilege.errors.0 }}</span>
+          {{ form.privilege }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.password.auto_id }}">{{ form.password.label }}</label>
+          <span class="error">{{ form.password.errors.0 }}</span>
+          {{ form.password }}
+        </div>
+        <div class="form-group" style="display: none;">
+          <label for="{{ form.terminal.auto_id }}">{{ form.terminal.label }}</label>
+          <span class="error">{{ form.terminal.errors.0 }}</span>
+          {{ form.terminal }}
+        </div>
+        <div class="center">
+          <button type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

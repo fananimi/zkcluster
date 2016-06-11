@@ -18,6 +18,7 @@
           <th>{% trans 'Name' %}</th>
           <th>{% trans 'Privilege' %}</th>
           <th>{% trans 'Terminal' %}</th>
+          <th>{% trans 'Action' %}</th>
         </tr>
       </thead>
       <tbody>
@@ -26,8 +27,22 @@
             <th scope="row">{{ user.id }}</th>
             <td>{{ user.uid }}</td>
             <td>{{ user.name }}</td>
-            <td>{{ user.privilege }}</td>
+            <td>{{ user.get_privilege_name }}</td>
             <td>{{ user.terminal }}</td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                  {% trans 'Action' %} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="{% url 'zkcluster:user_action' 'edit' user.id %}">
+                      <i class="fa fa-edit" aria-hidden="true"></i> {% trans 'Edit' %}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
           </tr>
         {% endfor %}
       </tbody>

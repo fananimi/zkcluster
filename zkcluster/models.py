@@ -132,47 +132,54 @@ class User(models.Model):
     group_id = models.CharField(_('group id'), max_length=7, blank=True, null=True)
     terminal = models.ForeignKey(Terminal, related_name='zkuser')
 
+    def get_privilege_name(self):
+        if self.privilege == self.USER_ADMIN:
+            return _('Administrator')
+
+        return _('User')
+
     def __unicode__(self):
         return self.name
 
 @receiver(pre_save, sender=User)
 def pre_save_user(sender, **kwargs):
     instance = kwargs['instance']
+    terminal = instance.terminal
 
-    instance.terminal.zk_connect()
+    terminal.zk_connect()
 
     if instance.uid:
-        instance.terminal.zk_setuser(
+        terminal.zk_setuser(
             instance.uid,
             instance.name,
             instance.privilege,
             instance.password,
             instance.uid
         )
-        instance.terminal.zk_voice()
-        instance.terminal.zk_disconnect()
+        terminal.zk_voice()
+        terminal.zk_disconnect()
     else:
-        available_uid = DeletedUID.objects.filter(terminal=instance.terminal).first()
+        available_uid = DeletedUID.objects.filter(terminal=terminal).first()
         if available_uid:
             instance.uid = available_uid.uid
         else:
-            instance.uid = instance.terminal.counter.next_uid
+            instance.uid = terminal.counter.next_uid
 
-        instance.terminal.zk_setuser(
+        terminal.zk_setuser(
             instance.uid,
             instance.name,
             instance.privilege,
             instance.password,
             instance.uid
         )
-        instance.terminal.zk_voice()
-        instance.terminal.zk_disconnect()
+        terminal.zk_voice()
+        terminal.zk_disconnect()
 
         if available_uid:
             available_uid.delete()
         else:
-            instance.terminal.counter.next_uid += 1
-            instance.terminal.counter.save()
+            terminal.counter.next_uid += 1
+            terminal.counter.save()
 
 @receiver(pre_delete, sender=User)
 def pre_delete_user(sender, **kwargs):
