@@ -23,6 +23,15 @@
       </thead>
       <tbody>
         {% for terminal in terminals %}
+          <form id="form_restart" method="POST" action="{% url 'zkcluster:terminal_action' 'restart' terminal.id %}">
+            {% csrf_token %}
+          </form>
+          <form id="form_poweroff" method="POST" action="{% url 'zkcluster:terminal_action' 'poweroff' terminal.id %}">
+            {% csrf_token %}
+          </form>
+          <form id="form_voice" method="POST" action="{% url 'zkcluster:terminal_action' 'voice' terminal.id %}">
+            {% csrf_token %}
+          </form>
           <tr>
             <th scope="row">{{ terminal.id }}</th>
             <td>{{ terminal.name }}</td>
@@ -41,17 +50,17 @@
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="#" class="zk_action" id="action_restart">
                       <i class="fa fa-refresh" aria-hidden="true"></i> {% trans 'Restart' %}
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="#" class="zk_action" id="action_poweroff">
                       <i class="fa fa-power-off" aria-hidden="true"></i> {% trans 'Power Off' %}
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="#" class="zk_action" id="action_voice">
                       <i class="fa fa-volume-up" aria-hidden="true"></i> {% trans 'Test Sound' %}
                     </a>
                   </li>
@@ -70,4 +79,23 @@
         </a>
       </div>
   {% endif %}
+{% endblock %}
+
+{% block script %}
+  <script>
+    $('.zk_action').click(function(){
+      var action_id = $(this).attr('id');
+      switch(action_id){
+        case "action_restart":
+          $("#form_restart").submit();
+          break;
+        case "action_poweroff":
+          $("#form_poweroff").submit();
+          break;
+        case "action_voice":
+          $("#form_voice").submit();
+          break;
+      };
+    });
+  </script>
 {% endblock %}
