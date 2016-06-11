@@ -32,7 +32,7 @@ def terminal(request):
 
 @alowed(['POST'])
 @login_required
-def terminal_save(request):
+def terminal_add(request):
     connected = request.GET.get('connected')
     if connected:
         form = SaveTerminal(request.POST or None, {'validate_name': True})
@@ -48,11 +48,11 @@ def terminal_save(request):
     data = {
         'form': form
     }
-    return render(request, 'zkcluster/terminal_save.html', data)
+    return render(request, 'zkcluster/terminal_add.html', data)
 
 @alowed(['GET', 'POST'])
 @login_required
-def terminal_add(request):
+def terminal_scan(request):
     form = ScanTerminal(request.POST or None)
     if request.POST and form.is_valid():
         ip = form.cleaned_data['ip']
@@ -73,7 +73,7 @@ def terminal_add(request):
             request.POST._mutable = mutable
 
             terminal.zk_disconnect()
-            return terminal_save(request)
+            return terminal_add(request)
         except ZKError, e:
             messages.add_message(request, messages.ERROR, str(e))
 
