@@ -37,8 +37,11 @@ def terminal_save(request):
     if connected:
         form = SaveTerminal(request.POST or None, {'validate_name': True})
         if form.is_valid():
-            form.save()
-            return redirect('zkcluster:terminal')
+            try:
+                form.save()
+                return redirect('zkcluster:terminal')
+            except ZKError, e:
+                messages.add_message(request, messages.ERROR, str(e))
     else:
         form = SaveTerminal(request.POST or None)
 
@@ -55,31 +58,24 @@ def terminal_add(request):
         ip = form.cleaned_data['ip']
         port = form.cleaned_data['port']
 
-        # connect to terminal
-        terminal = zk.ZK(ip, port, 5)
-        conn = False
+        terminal = Terminal(
+            ip=ip,
+            port=port
+        )
         try:
-            conn = terminal.connect()
-            if conn:
-                terminal.disable_device()
-                sn = terminal.get_serialnumber()
+            terminal.zk_connect()
+            sn = terminal.zk_getserialnumber()
 
-                # manipulate the POST information
-                mutable = request.POST._mutable
-                request.POST._mutable = True
-                request.POST['serialnumber'] = sn
-                request.POST._mutable = mutable
+            # manipulate the POST information
+            mutable = request.POST._mutable
+            request.POST._mutable = True
+            request.POST['serialnumber'] = sn
+            request.POST._mutable = mutable
 
-                return terminal_save(request)
-            else:
-                messages.add_message(request, messages.ERROR, _('can\'t connect to terminal'))
-        except Exception, e:
+            terminal.zk_disconnect()
+            return terminal_save(request)
+        except ZKError, e:
             messages.add_message(request, messages.ERROR, str(e))
-        finally:
-            if conn:
-                terminal.test_voice()
-                terminal.enable_device()
-                terminal.disconnect()
 
     data = {
         'form': form

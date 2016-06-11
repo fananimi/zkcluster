@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import zk
 from zk.exception import ZKError
-from django.db.models.signals import pre_save, pre_delete
+from django.db.models.signals import post_save, pre_save, pre_delete
 from django.dispatch.dispatcher import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -47,6 +47,12 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.poweroff()
 
+    def zk_getserialnumber(self):
+        if not self.zkconn:
+            raise ZKError(_('terminal connection error'))
+        sn = self.zkconn.get_serialnumber()
+        return sn
+
     def zk_voice(self):
         if not self.zkconn:
             raise ZKError(_('terminal connection error'))
@@ -69,12 +75,44 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.clear_data()
 
+# make sure the terminal is available
+@receiver(pre_save, sender=Terminal)
+def pre_save_terminal(sender, **kwargs):
+    instance = kwargs['instance']
+    instance.zk_connect()
+    instance.serialnumber = instance.zk_getserialnumber()
+    instance.zk_voice()
+    instance.zk_disconnect()
+
+# generate uid counter used by user
+@receiver(post_save, sender=Terminal)
+def on_save_terminal(sender, **kwargs):
+    instance = kwargs['instance']
+    counter = UIDCounter.objects.filter(terminal=instance).first()
+    if not counter:
+        UIDCounter.objects.create(next_uid=1, terminal=instance)
+
+# delete all correspondence data
 @receiver(pre_delete, sender=Terminal)
 def pre_delete_terminal(sender, **kwargs):
     instance = kwargs['instance']
     instance.zk_connect()
     instance.zk_voice()
     instance.zk_clear_data()
+
+class DeletedUID(models.Model):
+    uid = models.IntegerField()
+    terminal = models.ForeignKey(Terminal, related_name='deleted_uids')
+
+    def __unicode__(self):
+        return '{}'.format(self.uid)
+
+class UIDCounter(models.Model):
+    next_uid = models.IntegerField()
+    terminal = models.OneToOneField(Terminal, related_name='counter')
+
+    def __unicode__(self):
+        return '{}'.format(self.next_uid)
 
 class User(models.Model):
     USER_DEFAULT        = 0
@@ -98,21 +136,46 @@ class User(models.Model):
 @receiver(pre_save, sender=User)
 def pre_save_user(sender, **kwargs):
     instance = kwargs['instance']
-    try:
-        latest_user = User.objects.filter(terminal=instance.terminal).latest('id')
-        uid = latest_user.uid + 1
-    except User.DoesNotExist:
-        uid = 1
-
-    instance.uid = uid
 
     instance.terminal.zk_connect()
-    instance.terminal.zk_setuser(
-        instance.uid,
-        instance.name,
-        instance.privilege,
-        instance.password,
-        instance.uid
+
+    if instance.uid:
+        instance.terminal.zk_setuser(
+            instance.uid,
+            instance.name,
+            instance.privilege,
+            instance.password,
+            instance.uid
+        )
+        instance.terminal.zk_voice()
+        instance.terminal.zk_disconnect()
+    else:
+        available_uid = DeletedUID.objects.filter(terminal=instance.terminal).first()
+        if available_uid:
+            instance.uid = available_uid.uid
+        else:
+            instance.uid = instance.terminal.counter.next_uid
+
+        instance.terminal.zk_setuser(
+            instance.uid,
+            instance.name,
+            instance.privilege,
+            instance.password,
+            instance.uid
+        )
+        instance.terminal.zk_voice()
+        instance.terminal.zk_disconnect()
+
+        if available_uid:
+            available_uid.delete()
+        else:
+            instance.terminal.counter.next_uid += 1
+            instance.terminal.counter.save()
+
+@receiver(pre_delete, sender=User)
+def pre_delete_user(sender, **kwargs):
+    instance = kwargs['instance']
+    DeletedUID.objects.create(
+        uid=instance.uid,
+        terminal=instance.terminal
     )
-    instance.terminal.zk_voice()
-    instance.terminal.zk_disconnect()
