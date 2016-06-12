@@ -2,8 +2,9 @@ from __future__ import unicode_literals
 
 import zk
 from zk.exception import ZKError
-from django.db.models.signals import post_save, pre_save, pre_delete
+from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
+from django.db.models.signals import post_save, pre_save, pre_delete
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
@@ -23,13 +24,17 @@ class Terminal(models.Model):
         return self.name
 
     def format(self):
-        '''
-        not implemented yet
-        '''
-        # self.zk_connect()
-        # self.zk_voice()
-        # self.zk_clear_data()
-        # self.users.all().delete()
+        from models import User, DeletedUID, UIDCounter
+        from signals import PauseSignal
+        with PauseSignal(signal=pre_delete, receiver=pre_delete_user, sender=User):
+            self.zk_connect()
+            self.zk_voice()
+            self.zk_clear_data()
+            # remote related records
+            self.deleted_uids.all().delete()
+            self.counter.next_uid = 1
+            self.counter.save()
+            self.users.all().delete()
 
     def zk_connect(self):
         ip = self.ip
@@ -91,23 +96,6 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.clear_data()
 
-# make sure the terminal is available
-@receiver(pre_save, sender=Terminal)
-def pre_save_terminal(sender, **kwargs):
-    instance = kwargs['instance']
-    instance.zk_connect()
-    instance.serialnumber = instance.zk_getserialnumber()
-    instance.zk_voice()
-    instance.zk_disconnect()
-
-# generate uid counter used by user
-@receiver(post_save, sender=Terminal)
-def on_save_terminal(sender, **kwargs):
-    instance = kwargs['instance']
-    counter = UIDCounter.objects.filter(terminal=instance).first()
-    if not counter:
-        UIDCounter.objects.create(next_uid=1, terminal=instance)
-
 class DeletedUID(models.Model):
     uid = models.IntegerField()
     terminal = models.ForeignKey(Terminal, related_name='deleted_uids')
@@ -147,50 +135,5 @@ class User(models.Model):
     def __unicode__(self):
         return self.name
 
-@receiver(pre_save, sender=User)
-def pre_save_user(sender, **kwargs):
-    instance = kwargs['instance']
-    terminal = instance.terminal
-
-    terminal.zk_connect()
-
-    if instance.uid:
-        terminal.zk_setuser(
-            instance.uid,
-            instance.name,
-            instance.privilege,
-            instance.password,
-            instance.uid
-        )
-        terminal.zk_voice()
-        terminal.zk_disconnect()
-    else:
-        available_uid = DeletedUID.objects.filter(terminal=terminal).first()
-        if available_uid:
-            instance.uid = available_uid.uid
-        else:
-            instance.uid = terminal.counter.next_uid
-
-        terminal.zk_setuser(
-            instance.uid,
-            instance.name,
-            instance.privilege,
-            instance.password,
-            instance.uid
-        )
-        terminal.zk_voice()
-        terminal.zk_disconnect()
-
-        if available_uid:
-            available_uid.delete()
-        else:
-            terminal.counter.next_uid += 1
-            terminal.counter.save()
-
-@receiver(pre_delete, sender=User)
-def pre_delete_user(sender, **kwargs):
-    instance = kwargs['instance']
-    DeletedUID.objects.create(
-        uid=instance.uid,
-        terminal=instance.terminal
-    )
+# register signal
+from .signals import *
