@@ -88,12 +88,13 @@ def pre_save_user(sender, **kwargs):
 def pre_delete_user(sender, **kwargs):
     instance = kwargs['instance']
 
-    terminal = instance.terminal
-    terminal.zk_connect()
-    terminal.zk_delete_user(instance.uid)
-    terminal.zk_disconnect()
+    if instance.terminal:
+        terminal = instance.terminal
+        terminal.zk_connect()
+        terminal.zk_delete_user(instance.uid)
+        terminal.zk_disconnect()
 
-    DeletedUID.objects.create(
-        uid=instance.uid,
-        terminal=instance.terminal
-    )
+        DeletedUID.objects.create(
+            uid=instance.uid,
+            terminal=instance.terminal
+        )
