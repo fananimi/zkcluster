@@ -124,7 +124,7 @@ class User(models.Model):
     privilege = models.SmallIntegerField(_('privilege'), choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(_('password'), max_length=8, blank=True, null=True)
     group_id = models.CharField(_('group id'), max_length=7, blank=True, null=True)
-    terminal = models.ForeignKey(Terminal, related_name='users')
+    terminal = models.ForeignKey(Terminal, blank=True, null=True, on_delete=models.SET_NULL, related_name='users')
 
     class Meta:
         unique_together = ("uid", "terminal")
@@ -137,6 +137,14 @@ class User(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class Attendance(models.Model):
+    user = models.ForeignKey(User, related_name='attendances')
+    timestamp = models.DateTimeField()
+    status = models.IntegerField()
+
+    def __unicode__(self):
+        return '{}'.format(self.user.name)
 
 # register signal
 from .signals import *

@@ -128,6 +128,10 @@ class UserForm(forms.ModelForm):
             })
         }
 
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['terminal'].required = True
+
     def clean_password(self):
         password = self.cleaned_data.get('password')
         if password and not password.isdigit():
