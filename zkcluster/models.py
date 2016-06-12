@@ -126,6 +126,9 @@ class User(models.Model):
     group_id = models.CharField(_('group id'), max_length=7, blank=True, null=True)
     terminal = models.ForeignKey(Terminal, related_name='users')
 
+    class Meta:
+        unique_together = ("uid", "terminal")
+
     def get_privilege_name(self):
         if self.privilege == self.USER_ADMIN:
             return _('Administrator')
