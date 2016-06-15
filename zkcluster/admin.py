@@ -1,8 +1,7 @@
 from django.contrib import admin
 
-from .models import Terminal, User, UIDCounter, DeletedUID
+from .models import Terminal, User, Attendance
 
 admin.site.register(Terminal)
-admin.site.register(DeletedUID)
-admin.site.register(UIDCounter)
 admin.site.register(User)
+admin.site.register(Attendance)

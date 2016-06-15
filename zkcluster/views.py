@@ -1,4 +1,3 @@
-import urlparse
 import zk
 from zk.exception import ZKError
 from django.contrib import messages

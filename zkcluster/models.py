@@ -2,9 +2,6 @@ from __future__ import unicode_literals
 
 import zk
 from zk.exception import ZKError
-from django.db.models.signals import pre_delete
-from django.dispatch.dispatcher import receiver
-from django.db.models.signals import post_save, pre_save, pre_delete
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
@@ -16,6 +13,9 @@ class Terminal(models.Model):
     ip = models.CharField(_('ip'), max_length=15, unique=True)
     port = models.IntegerField(_('port'), default=4370)
 
+    class Meta:
+        db_table = 'zk_terminal'
+
     def __init__(self, *arg, **kwargs):
         self.zkconn = None
         super(Terminal, self).__init__(*arg, **kwargs)
@@ -24,16 +24,11 @@ class Terminal(models.Model):
         return self.name
 
     def format(self):
-        from models import User, DeletedUID, UIDCounter
         from signals import PauseSignal
         with PauseSignal(signal=pre_delete, receiver=pre_delete_user, sender=User):
             self.zk_connect()
             self.zk_voice()
             self.zk_clear_data()
-            # remote related records
-            self.deleted_uids.all().delete()
-            self.counter.next_uid = 1
-            self.counter.save()
             self.users.all().delete()
 
     def zk_connect(self):
@@ -74,16 +69,16 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.test_voice()
 
-    def zk_setuser(self, uid, name, privilege, password, user_id):
+    def zk_setuser(self, user):
         if not self.zkconn:
             raise ZKError(_('terminal connection error'))
 
         self.zkconn.set_user(
-            uid=int(uid),
-            name=str(name),
-            privilege=int(privilege),
-            password=str(password),
-            user_id=str(user_id)
+            uid=int(user.id),
+            name=str(user.name),
+            privilege=int(user.privilege),
+            password=str(user.password),
+            user_id=str(user.id)
         )
 
     def zk_delete_user(self, uid):
@@ -96,20 +91,6 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.clear_data()
 
-class DeletedUID(models.Model):
-    uid = models.IntegerField()
-    terminal = models.ForeignKey(Terminal, related_name='deleted_uids')
-
-    def __unicode__(self):
-        return '{}'.format(self.uid)
-
-class UIDCounter(models.Model):
-    next_uid = models.IntegerField()
-    terminal = models.OneToOneField(Terminal, related_name='counter')
-
-    def __unicode__(self):
-        return '{}'.format(self.next_uid)
-
 class User(models.Model):
     USER_DEFAULT        = 0
     USER_ADMIN          = 14
@@ -119,7 +100,6 @@ class User(models.Model):
         (USER_ADMIN, _('Administrator'))
     )
 
-    uid = models.IntegerField(_('uid'))
     name = models.CharField(_('name'), max_length=28)
     privilege = models.SmallIntegerField(_('privilege'), choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(_('password'), max_length=8, blank=True, null=True)
@@ -127,7 +107,7 @@ class User(models.Model):
     terminal = models.ForeignKey(Terminal, blank=True, null=True, on_delete=models.SET_NULL, related_name='users')
 
     class Meta:
-        unique_together = ("uid", "terminal")
+        db_table = 'zk_user'
 
     def get_privilege_name(self):
         if self.privilege == self.USER_ADMIN:
@@ -142,6 +122,9 @@ class Attendance(models.Model):
     user = models.ForeignKey(User, related_name='attendances')
     timestamp = models.DateTimeField()
     status = models.IntegerField()
+
+    class Meta:
+        db_table = 'zk_attendance'
 
     def __unicode__(self):
         return '{}'.format(self.user.name)

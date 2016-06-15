@@ -1,7 +1,7 @@
 from django.dispatch.dispatcher import receiver
-from django.db.models.signals import post_save, pre_save, pre_delete
+from django.db.models.signals import pre_save, post_save, pre_delete
 
-from .models import Terminal, User, DeletedUID, UIDCounter
+from .models import Terminal, User
 
 class PauseSignal(object):
     """ Temporarily disconnect a model from a signal """
@@ -27,7 +27,6 @@ class PauseSignal(object):
             weak=False
         )
 
-# make sure the terminal is available
 @receiver(pre_save, sender=Terminal)
 def pre_save_terminal(sender, **kwargs):
     instance = kwargs['instance']
@@ -36,53 +35,20 @@ def pre_save_terminal(sender, **kwargs):
     instance.zk_voice()
     instance.zk_disconnect()
 
-# generate uid counter used by user
-@receiver(post_save, sender=Terminal)
-def on_save_terminal(sender, **kwargs):
-    instance = kwargs['instance']
-    counter = UIDCounter.objects.filter(terminal=instance).first()
-    if not counter:
-        UIDCounter.objects.create(next_uid=1, terminal=instance)
-
 @receiver(pre_save, sender=User)
 def pre_save_user(sender, **kwargs):
     instance = kwargs['instance']
     terminal = instance.terminal
-
     terminal.zk_connect()
 
-    if instance.uid:
-        terminal.zk_setuser(
-            instance.uid,
-            instance.name,
-            instance.privilege,
-            instance.password,
-            instance.uid
-        )
-        terminal.zk_voice()
-        terminal.zk_disconnect()
-    else:
-        available_uid = DeletedUID.objects.filter(terminal=terminal).first()
-        if available_uid:
-            instance.uid = available_uid.uid
-        else:
-            instance.uid = terminal.counter.next_uid
+@receiver(post_save, sender=User)
+def post_save_user(sender, **kwargs):
+    instance = kwargs['instance']
+    terminal = instance.terminal
 
-        terminal.zk_setuser(
-            instance.uid,
-            instance.name,
-            instance.privilege,
-            instance.password,
-            instance.uid
-        )
-        terminal.zk_voice()
-        terminal.zk_disconnect()
-
-        if available_uid:
-            available_uid.delete()
-        else:
-            terminal.counter.next_uid += 1
-            terminal.counter.save()
+    terminal.zk_setuser(instance)
+    terminal.zk_voice()
+    terminal.zk_disconnect()
 
 @receiver(pre_delete, sender=User)
 def pre_delete_user(sender, **kwargs):
@@ -91,10 +57,5 @@ def pre_delete_user(sender, **kwargs):
     if instance.terminal:
         terminal = instance.terminal
         terminal.zk_connect()
-        terminal.zk_delete_user(instance.uid)
+        terminal.zk_delete_user(instance.id)
         terminal.zk_disconnect()
-
-        DeletedUID.objects.create(
-            uid=instance.uid,
-            terminal=instance.terminal
-        )
