@@ -91,6 +91,17 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.clear_data()
 
+    def zk_get_attendances(self):
+        if not self.zkconn:
+            raise ZKError(_('terminal connection error'))
+        attendances = self.zkconn.get_attendance()
+        return attendances
+
+    def zk_clear_attendances(self):
+        if not self.zkconn:
+            raise ZKError(_('terminal connection error'))
+        self.zkconn.clear_attendance()
+
 class User(models.Model):
     USER_DEFAULT        = 0
     USER_ADMIN          = 14

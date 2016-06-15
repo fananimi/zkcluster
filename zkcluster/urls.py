@@ -14,5 +14,8 @@ urlpatterns = [
 
     url(r'^user/$', views.user, name='user'),
     url(r'^user/add/$', views.user_add, name='user_add'),
-    url(r'^user/(?P<action>[\w-]+)/(?P<user_id>[0-9]+)/$', views.user_action, name='user_action')
+    url(r'^user/(?P<action>[\w-]+)/(?P<user_id>[0-9]+)/$', views.user_action, name='user_action'),
+
+    url(r'^attendance/$', views.attendance, name='attendance'),
+    url(r'^attendance/sync/$', views.attendance_sync, name='attendance_sync'),
 ]

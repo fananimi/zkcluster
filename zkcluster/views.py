@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_http_methods as alowed
 
 from .forms import ScanTerminal, SaveTerminal, EditTerminal, UserForm
-from .models import Terminal, User
+from .models import Terminal, User, Attendance
 
 @alowed(['GET'])
 @login_required
@@ -197,6 +197,8 @@ def user_add(request):
     }
     return render(request, 'zkcluster/user_add.html', data)
 
+@alowed(['GET', 'POST'])
+@login_required
 def user_edit(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     form = UserForm(request.POST or None, instance=user)
@@ -212,6 +214,8 @@ def user_edit(request, user_id):
     }
     return render(request, 'zkcluster/user_edit.html', data)
 
+@alowed(['POST'])
+@login_required
 def delete_user(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     try:
@@ -220,6 +224,8 @@ def delete_user(request, user_id):
         messages.add_message(request, messages.ERROR, str(e))
     return redirect('zkcluster:user')
 
+@alowed(['GET', 'POST'])
+@login_required
 def user_action(request, action, user_id):
     if action == 'edit':
         return user_edit(request, user_id)
@@ -227,3 +233,34 @@ def user_action(request, action, user_id):
         return delete_user(request, user_id)
     else:
         raise Http404("Action doest not allowed")
+
+@alowed(['GET', 'POST'])
+@login_required
+def attendance(request):
+    attendances = Attendance.objects.all()
+    data = {
+        'attendances': attendances
+    }
+    return render(request, 'zkcluster/attendance.html', data)
+
+@alowed(['GET'])
+@login_required
+def attendance_sync(request):
+    terminals = Terminal.objects.all()
+    for terminal in terminals:
+        try:
+            terminal.zk_connect()
+            attendances = []
+            for attendance in terminal.zk_get_attendances():
+                user = User.objects.get(pk=attendance.user_id)
+                Attendance.objects.create(
+                    user=user,
+                    timestamp=attendance.timestamp,
+                    status=attendance.status
+                )
+            terminal.zk_clear_attendances()
+            terminal.zk_voice()
+            terminal.zk_disconnect()
+        except ZKError, e:
+            pass
+    return redirect('zkcluster:attendance')

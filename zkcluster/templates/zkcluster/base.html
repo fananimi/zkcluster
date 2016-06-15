@@ -43,6 +43,11 @@
                       <i class="fa fa-user" aria-hidden="true"></i> {% trans 'User' %}
                     </a>
                   </li>
+                  <li {% if request.path == '/zkcluster/attendance/' %}class="active"{% endif %}>
+                    <a href="{% url 'zkcluster:attendance' %}">
+                      <i class="fa fa-users" aria-hidden="true"></i> {% trans 'Attendance' %}
+                    </a>
+                  </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li>
