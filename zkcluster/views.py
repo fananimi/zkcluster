@@ -197,7 +197,7 @@ def user_add(request):
     }
     return render(request, 'zkcluster/user_add.html', data)
 
-def user_edit(request, action, user_id):
+def user_edit(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     form = UserForm(request.POST or None, instance=user)
     if request.POST and form.is_valid():
@@ -212,8 +212,18 @@ def user_edit(request, action, user_id):
     }
     return render(request, 'zkcluster/user_edit.html', data)
 
+def delete_user(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    try:
+        user.delete()
+    except ZKError, e:
+        messages.add_message(request, messages.ERROR, str(e))
+    return redirect('zkcluster:user')
+
 def user_action(request, action, user_id):
     if action == 'edit':
-        return user_edit(request, action, user_id)
+        return user_edit(request, user_id)
+    elif action == 'delete':
+        return delete_user(request, user_id)
     else:
         raise Http404("Action doest not allowed")

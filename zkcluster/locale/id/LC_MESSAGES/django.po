@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-10 07:48+0000\n"
+"POT-Creation-Date: 2016-06-15 10:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,63 +67,62 @@ msgstr "Nama lengkap"
 msgid "Password"
 msgstr "Kata Sandi"
 
-#: public/zkcluster/zkcluster/forms.py:134
+#: public/zkcluster/zkcluster/forms.py:138
 msgid "Enter a whole number."
 msgstr "Masukkan angka bulat"
 
-#: public/zkcluster/zkcluster/models.py:12
-#: public/zkcluster/zkcluster/models.py:97
+#: public/zkcluster/zkcluster/models.py:11
+#: public/zkcluster/zkcluster/models.py:103
 msgid "name"
 msgstr "nama"
 
-#: public/zkcluster/zkcluster/models.py:13
+#: public/zkcluster/zkcluster/models.py:12
 msgid "serialnumber"
 msgstr "nomor seri"
 
-#: public/zkcluster/zkcluster/models.py:14
+#: public/zkcluster/zkcluster/models.py:13
 msgid "ip"
 msgstr "ip"
 
-#: public/zkcluster/zkcluster/models.py:15
+#: public/zkcluster/zkcluster/models.py:14
 msgid "port"
 msgstr "port"
 
-#: public/zkcluster/zkcluster/models.py:34
-#: public/zkcluster/zkcluster/views.py:75
+#: public/zkcluster/zkcluster/models.py:43
 msgid "can't connect to terminal"
 msgstr "tidak dapat terhubung ke terminal"
 
-#: public/zkcluster/zkcluster/models.py:40
-#: public/zkcluster/zkcluster/models.py:46
-#: public/zkcluster/zkcluster/models.py:51
-#: public/zkcluster/zkcluster/models.py:56
-#: public/zkcluster/zkcluster/models.py:61
-#: public/zkcluster/zkcluster/models.py:73
+#: public/zkcluster/zkcluster/models.py:47
+#: public/zkcluster/zkcluster/models.py:53
+#: public/zkcluster/zkcluster/models.py:58
+#: public/zkcluster/zkcluster/models.py:63
+#: public/zkcluster/zkcluster/models.py:69
+#: public/zkcluster/zkcluster/models.py:74
+#: public/zkcluster/zkcluster/models.py:86
+#: public/zkcluster/zkcluster/models.py:91
 msgid "terminal connection error"
 msgstr "Koneksi ke terminal error"
 
-#: public/zkcluster/zkcluster/models.py:92
+#: public/zkcluster/zkcluster/models.py:99
+#: public/zkcluster/zkcluster/models.py:116
 #: public/zkcluster/zkcluster/templates/zkcluster/base.html:43
 msgid "User"
 msgstr "Pengguna"
 
-#: public/zkcluster/zkcluster/models.py:93
+#: public/zkcluster/zkcluster/models.py:100
+#: public/zkcluster/zkcluster/models.py:114
 msgid "Administrator"
 msgstr "Administrator"
 
-#: public/zkcluster/zkcluster/models.py:96
-msgid "uid"
-msgstr "uid"
-
-#: public/zkcluster/zkcluster/models.py:98
+#: public/zkcluster/zkcluster/models.py:104
 msgid "privilege"
 msgstr "hak akses"
 
-#: public/zkcluster/zkcluster/models.py:99
+#: public/zkcluster/zkcluster/models.py:105
 msgid "password"
 msgstr "Kata Sandi"
 
-#: public/zkcluster/zkcluster/models.py:100
+#: public/zkcluster/zkcluster/models.py:106
 msgid "group id"
 msgstr "id grup"
 
@@ -158,7 +157,7 @@ msgid "Welcome"
 msgstr "Terima kasih"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:9
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:69
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:78
 msgid "Add Terminal"
 msgstr "Tambah Terminal"
 
@@ -172,38 +171,47 @@ msgid "IP"
 msgstr "IP"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:21
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:35
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:44
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:12
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:21
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:35
 msgid "Action"
 msgstr "Aksi"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:40
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:49
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:9
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:40
 msgid "Edit"
 msgstr "Ubah"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:45
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:54
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:61
 msgid "Restart"
 msgstr "Muat Ulang"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:50
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:59
 msgid "Power Off"
 msgstr "Matikan Daya"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:55
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:64
 msgid "Test Sound"
 msgstr "Tes Suara"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:67
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:76
 msgid "No terminal found"
 msgstr "Terminal tidak tersedia"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_add.html:29
+#: public/zkcluster/zkcluster/templates/zkcluster/user_add.html:29
+msgid "Save"
+msgstr "Simpan"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:15
 msgid "Danger Zone"
 msgstr "Zona Bahaya"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:47
+#: public/zkcluster/zkcluster/templates/zkcluster/user_edit.html:30
 msgid "Update"
 msgstr "Ubah"
 
@@ -220,43 +228,51 @@ msgid "Power off"
 msgstr "Matikan Daya"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:79
-msgid "Delete All User"
-msgstr "Hapus Semua User"
+msgid "Delete This Terminal"
+msgstr "Hapus Terminal Ini"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:81
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:87
 msgid "Delete"
 msgstr "Hapus"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:85
-msgid "Delete Terminal"
-msgstr "Hapus Terminal"
+msgid "Format Terminal"
+msgstr "Muat Ulang Terminal"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:87
+msgid "Format"
+msgstr "Bersihkan"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:103
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:134
 msgid "Are you ABSOLUTELY sure?"
 msgstr "Apakah anda BENAR-BENAR yakin?"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:109
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:140
 msgid "This action"
 msgstr "Aksi ini"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:109
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:140
 msgid "CANNOT"
 msgstr "TIDAK DAPAT"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:109
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:140
 msgid "be undone"
 msgstr "di kembalikan"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:109
-msgid "This will permanently delete the"
+msgid "This will delete the"
 msgstr "Ini akan menghapus secara permanen"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:109
-msgid "include all the related users of them"
-msgstr "termasuk semua user yang berhubungan"
+msgid "from database"
+msgstr "dari basis data"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:113
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:144
 msgid "Please type in the name of the terminal to confirm"
 msgstr "Mohon ketikan nama terminal untuk konfirmasi"
 
@@ -264,33 +280,42 @@ msgstr "Mohon ketikan nama terminal untuk konfirmasi"
 msgid "I understand the consequences, delete this terminal"
 msgstr "Saya menyadari dampaknya, hapus terminal ini"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:142
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:140
+msgid "This will permanently delete all user and attendance records in"
+msgstr ""
+"Ini akan menghapus secara permanen semua user dan daftar kehadiran pada"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:151
+msgid "I understand the consequences, format this terminal"
+msgstr "Saya menyadari dampaknya, bersihkan terminal ini"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:174
+#: public/zkcluster/zkcluster/templates/zkcluster/user_edit.html:41
 msgid "Updating..."
 msgstr "Mengubah..."
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:145
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:178
 msgid "Restarting..."
 msgstr "Muat Ulang..."
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:148
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:182
 msgid "Shutting down..."
 msgstr "Mematikan..."
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:163
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:197
 msgid "Deleting..."
 msgstr "Sedang menghapus..."
 
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal_save.html:29
-#: public/zkcluster/zkcluster/templates/zkcluster/user_add.html:29
-msgid "Save"
-msgstr "Simpan"
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal_edit.html:212
+msgid "Formating..."
+msgstr "Membersihkan..."
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal_scan.html:19
 msgid "Scan"
 msgstr "Pindai"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/user.html:9
-#: public/zkcluster/zkcluster/templates/zkcluster/user.html:39
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:54
 msgid "Add User"
 msgstr "Tambah Pengguna"
 
@@ -302,10 +327,19 @@ msgstr "UID"
 msgid "Privilege"
 msgstr "hak akses"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/user.html:37
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:52
 msgid "No user found"
 msgstr "Pengguna tidak tersedia"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/user_add.html:39
 msgid "Saving..."
 msgstr "Meyimpan..."
+
+#~ msgid "uid"
+#~ msgstr "uid"
+
+#~ msgid "Delete All User"
+#~ msgstr "Hapus Semua User"
+
+#~ msgid "include all the related users of them"
+#~ msgstr "termasuk semua user yang berhubungan"

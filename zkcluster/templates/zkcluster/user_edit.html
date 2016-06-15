@@ -33,3 +33,12 @@
     </div>
   </div>
 {% endblock %}
+
+{% block script %}
+  <script>
+    $('#id_name').focus();
+    $('form#form_update').submit(function(){
+      $(this).find(':submit').prop('disabled', true).html('{% trans "Updating..." %}');
+    });
+  </script>
+{% endblock %}
