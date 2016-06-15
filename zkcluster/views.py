@@ -88,7 +88,10 @@ def terminal_edit(request, terminal_id):
     terminal = get_object_or_404(Terminal, pk=terminal_id)
     form = EditTerminal(request.POST or None, instance=terminal)
     if request.POST and form.is_valid():
-        form.save()
+        try:
+            form.save()
+        except ZKError, e:
+            messages.add_message(request, messages.ERROR, str(e))
         return redirect('zkcluster:terminal')
     data = {
         'terminal': terminal,
