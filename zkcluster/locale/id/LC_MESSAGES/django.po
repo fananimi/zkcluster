@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-15 10:29+0000\n"
+"POT-Creation-Date: 2016-06-15 12:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgid "Enter a whole number."
 msgstr "Masukkan angka bulat"
 
 #: public/zkcluster/zkcluster/models.py:11
-#: public/zkcluster/zkcluster/models.py:103
+#: public/zkcluster/zkcluster/models.py:114
 msgid "name"
 msgstr "nama"
 
@@ -100,31 +100,57 @@ msgstr "tidak dapat terhubung ke terminal"
 #: public/zkcluster/zkcluster/models.py:74
 #: public/zkcluster/zkcluster/models.py:86
 #: public/zkcluster/zkcluster/models.py:91
+#: public/zkcluster/zkcluster/models.py:96
+#: public/zkcluster/zkcluster/models.py:102
 msgid "terminal connection error"
 msgstr "Koneksi ke terminal error"
 
-#: public/zkcluster/zkcluster/models.py:99
-#: public/zkcluster/zkcluster/models.py:116
+#: public/zkcluster/zkcluster/models.py:110
+#: public/zkcluster/zkcluster/models.py:127
+#: public/zkcluster/zkcluster/templates/zkcluster/attendance.html:17
 #: public/zkcluster/zkcluster/templates/zkcluster/base.html:43
 msgid "User"
 msgstr "Pengguna"
 
-#: public/zkcluster/zkcluster/models.py:100
-#: public/zkcluster/zkcluster/models.py:114
+#: public/zkcluster/zkcluster/models.py:111
+#: public/zkcluster/zkcluster/models.py:125
 msgid "Administrator"
 msgstr "Administrator"
 
-#: public/zkcluster/zkcluster/models.py:104
+#: public/zkcluster/zkcluster/models.py:115
 msgid "privilege"
 msgstr "hak akses"
 
-#: public/zkcluster/zkcluster/models.py:105
+#: public/zkcluster/zkcluster/models.py:116
 msgid "password"
 msgstr "Kata Sandi"
 
-#: public/zkcluster/zkcluster/models.py:106
+#: public/zkcluster/zkcluster/models.py:117
 msgid "group id"
 msgstr "id grup"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/attendance.html:9
+#: public/zkcluster/zkcluster/templates/zkcluster/attendance.html:38
+msgid "Sync Attendance"
+msgstr "Sinkronisasi Kehadiran"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/attendance.html:16
+#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:16
+#: public/zkcluster/zkcluster/templates/zkcluster/user.html:16
+msgid "ID"
+msgstr "ID"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/attendance.html:18
+msgid "Timestamp"
+msgstr "Waktu"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/attendance.html:19
+msgid "Status"
+msgstr "Setatus"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/attendance.html:35
+msgid "No attendance record"
+msgstr "Tidak terdapat laporan kehadiran"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/base.html:33
 #: public/zkcluster/zkcluster/templates/zkcluster/dashboard.html:6
@@ -136,19 +162,23 @@ msgstr "Dasbor"
 msgid "Terminal"
 msgstr "Terminal"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/base.html:52
+#: public/zkcluster/zkcluster/templates/zkcluster/base.html:48
+msgid "Attendance"
+msgstr "Kehadiran"
+
+#: public/zkcluster/zkcluster/templates/zkcluster/base.html:57
 msgid "Language"
 msgstr "Bahasa"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/base.html:63
+#: public/zkcluster/zkcluster/templates/zkcluster/base.html:68
 msgid "Go"
 msgstr "Lanjut"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/base.html:68
+#: public/zkcluster/zkcluster/templates/zkcluster/base.html:73
 msgid "Logout"
 msgstr "Keluar"
 
-#: public/zkcluster/zkcluster/templates/zkcluster/base.html:88
+#: public/zkcluster/zkcluster/templates/zkcluster/base.html:93
 msgid "Copyright"
 msgstr "Hak Cipta"
 
@@ -160,11 +190,6 @@ msgstr "Terima kasih"
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:78
 msgid "Add Terminal"
 msgstr "Tambah Terminal"
-
-#: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:16
-#: public/zkcluster/zkcluster/templates/zkcluster/user.html:16
-msgid "ID"
-msgstr "ID"
 
 #: public/zkcluster/zkcluster/templates/zkcluster/terminal.html:19
 msgid "IP"
@@ -334,6 +359,9 @@ msgstr "Pengguna tidak tersedia"
 #: public/zkcluster/zkcluster/templates/zkcluster/user_add.html:39
 msgid "Saving..."
 msgstr "Meyimpan..."
+
+#~ msgid "Sync Record"
+#~ msgstr "Sinkronisasi Laporan"
 
 #~ msgid "uid"
 #~ msgstr "uid"
