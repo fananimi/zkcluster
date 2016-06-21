@@ -78,7 +78,7 @@ class UserAdminForm(forms.ModelForm):
 
 class UserAdmin(admin.ModelAdmin):
     form = UserAdminForm
-    list_display = ('name', 'privilege', 'password', 'group_id')
+    list_display = (User.NAME_FIELD, 'privilege', 'password', 'group_id')
 
 class AttendanceAdmin(admin.ModelAdmin):
     list_display = ('id', 'user_id', 'terminal', 'timestamp', 'status')

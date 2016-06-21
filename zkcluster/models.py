@@ -116,6 +116,14 @@ class Attendance(models.Model):
         return '{}'.format(self.id)
 
 class AbstractUser(models.Model):
+    fullname = models.CharField(_('fullname'), max_length=28)
+
+    NAME_FIELD = 'fullname'
+
+    class Meta:
+        abstract = True
+
+class ZKBaseUser(models.Model):
     USER_DEFAULT        = 0
     USER_ADMIN          = 14
 
@@ -124,7 +132,6 @@ class AbstractUser(models.Model):
         (USER_ADMIN, _('Administrator'))
     )
 
-    name = models.CharField(_('name'), max_length=28)
     privilege = models.SmallIntegerField(_('privilege'), choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(_('password'), max_length=8, blank=True, null=True)
     group_id = models.CharField(_('group id'), max_length=7, blank=True, null=True)
@@ -144,8 +151,6 @@ class AbstractUser(models.Model):
         related_query_name="user",
     )
 
-    NAME_FIELD = 'name'
-
     class Meta:
         abstract = True
 
@@ -158,7 +163,7 @@ class AbstractUser(models.Model):
     def __unicode__(self):
         return self.name
 
-class User(AbstractUser):
+class User(AbstractUser, ZKBaseUser):
     class Meta(AbstractUser.Meta):
         swappable = 'ZK_USER_MODEL'
         db_table = 'zk_user'
