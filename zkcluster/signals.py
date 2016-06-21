@@ -1,7 +1,10 @@
 from django.dispatch.dispatcher import receiver
-from django.db.models.signals import pre_save, post_save, pre_delete
+from django.db.models.signals import pre_save, pre_delete, m2m_changed
 
-from .models import Terminal, User
+from zkcluster import get_user_model
+from zkcluster.models import Terminal
+
+User = get_user_model()
 
 class PauseSignal(object):
     """ Temporarily disconnect a model from a signal """
@@ -31,6 +34,7 @@ class PauseSignal(object):
 def pre_save_terminal(sender, **kwargs):
     instance = kwargs['instance']
     instance.zk_connect()
+    # generate serialnumber from device
     instance.serialnumber = instance.zk_getserialnumber()
     instance.zk_voice()
     instance.zk_disconnect()
@@ -38,24 +42,56 @@ def pre_save_terminal(sender, **kwargs):
 @receiver(pre_save, sender=User)
 def pre_save_user(sender, **kwargs):
     instance = kwargs['instance']
-    terminal = instance.terminal
-    terminal.zk_connect()
+    name = getattr(instance, User.NAME_FIELD)
+    terminals = []
+    try:
+        terminals = instance.terminals.all()
+    except ValueError, e:
+        pass
 
-@receiver(post_save, sender=User)
-def post_save_user(sender, **kwargs):
-    instance = kwargs['instance']
-    terminal = instance.terminal
-
-    terminal.zk_setuser(instance)
-    terminal.zk_voice()
-    terminal.zk_disconnect()
+    for terminal in terminals:
+        terminal.zk_connect()
+        terminal.zk_setuser(
+            uid=instance.id,
+            name=name,
+            privilege=instance.privilege,
+            password=instance.password,
+            user_id=instance.id
+        )
+        terminal.zk_voice()
+        terminal.zk_disconnect()
 
 @receiver(pre_delete, sender=User)
 def pre_delete_user(sender, **kwargs):
     instance = kwargs['instance']
-
-    if instance.terminal:
-        terminal = instance.terminal
+    terminals = instance.terminals.all()
+    for terminal in terminals:
         terminal.zk_connect()
         terminal.zk_delete_user(instance.id)
+        terminal.zk_voice()
         terminal.zk_disconnect()
+
+@receiver(m2m_changed, sender=User.terminals.through)
+def on_user_add_to_terminal(**kwargs):
+    instance = kwargs.pop('instance', None)
+    action = kwargs.pop('action', None)
+    if action == 'pre_add':
+        pass
+    if action == 'post_add':
+        for terminal in instance.terminals.all():
+            terminal.zk_connect()
+            name = getattr(instance, User.NAME_FIELD)
+            terminal.zk_setuser(
+                uid=instance.id,
+                name=name,
+                privilege=instance.privilege,
+                password=instance.password,
+                user_id=instance.id
+            )
+
+            terminal.zk_voice()
+            terminal.zk_disconnect()
+    if action == 'pre_remove':
+        pass
+    if action == 'post_remove':
+        pass

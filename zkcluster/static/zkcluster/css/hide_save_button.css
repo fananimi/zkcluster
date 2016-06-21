@@ -1,0 +1,4 @@
+/* Hide the "Delete", "Add Another" and "Save" buttons, customize this to what you need  */
+#content>h1, .object-tools, .submit-row {
+    display: none;
+}

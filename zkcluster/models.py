@@ -39,6 +39,7 @@ class Terminal(models.Model):
         if conn:
             terminal.disable_device()
             self.zkconn = terminal
+            return self
         else:
             raise ZKError(_('can\'t connect to terminal'))
 
@@ -69,16 +70,16 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.test_voice()
 
-    def zk_setuser(self, user):
+    def zk_setuser(self, uid, name, privilege, password, user_id):
         if not self.zkconn:
             raise ZKError(_('terminal connection error'))
 
         self.zkconn.set_user(
-            uid=int(user.id),
-            name=str(user.name),
-            privilege=int(user.privilege),
-            password=str(user.password),
-            user_id=str(user.id)
+            uid=int(uid),
+            name=str(name),
+            privilege=int(privilege),
+            password=str(password),
+            user_id=str(user_id)
         )
 
     def zk_delete_user(self, uid):
@@ -102,7 +103,19 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.clear_attendance()
 
-class User(models.Model):
+class Attendance(models.Model):
+    user_id = models.IntegerField(_('user id'))
+    terminal = models.ForeignKey(Terminal, related_name='attendances')
+    timestamp = models.DateTimeField(_('timestamp'))
+    status = models.IntegerField(_('status'))
+
+    class Meta:
+        db_table = 'zk_attendance'
+
+    def __unicode__(self):
+        return '{}'.format(self.id)
+
+class AbstractUser(models.Model):
     USER_DEFAULT        = 0
     USER_ADMIN          = 14
 
@@ -115,10 +128,26 @@ class User(models.Model):
     privilege = models.SmallIntegerField(_('privilege'), choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(_('password'), max_length=8, blank=True, null=True)
     group_id = models.CharField(_('group id'), max_length=7, blank=True, null=True)
-    terminal = models.ForeignKey(Terminal, blank=True, null=True, on_delete=models.SET_NULL, related_name='users')
+
+    terminals = models.ManyToManyField(
+        Terminal,
+        verbose_name=_('terminals'),
+        blank=True,
+        related_name="user_set",
+        related_query_name="user",
+    )
+    attendances = models.ManyToManyField(
+        Attendance,
+        verbose_name=_('attendances'),
+        blank=True,
+        related_name="user_set",
+        related_query_name="user",
+    )
+
+    NAME_FIELD = 'name'
 
     class Meta:
-        db_table = 'zk_user'
+        abstract = True
 
     def get_privilege_name(self):
         if self.privilege == self.USER_ADMIN:
@@ -129,16 +158,7 @@ class User(models.Model):
     def __unicode__(self):
         return self.name
 
-class Attendance(models.Model):
-    user = models.ForeignKey(User, related_name='attendances')
-    timestamp = models.DateTimeField()
-    status = models.IntegerField()
-
-    class Meta:
-        db_table = 'zk_attendance'
-
-    def __unicode__(self):
-        return '{}'.format(self.user.name)
-
-# register signal
-from .signals import *
+class User(AbstractUser):
+    class Meta(AbstractUser.Meta):
+        swappable = 'ZK_USER_MODEL'
+        db_table = 'zk_user'
