@@ -123,6 +123,9 @@ class AbstractUser(models.Model):
     class Meta:
         abstract = True
 
+    def __unicode__(self):
+        return getattr(self, 'NAME_FIELD')
+
 class ZKBaseUser(models.Model):
     USER_DEFAULT        = 0
     USER_ADMIN          = 14
@@ -159,9 +162,6 @@ class ZKBaseUser(models.Model):
             return _('Administrator')
 
         return _('User')
-
-    def __unicode__(self):
-        return self.name
 
 class User(AbstractUser, ZKBaseUser):
     class Meta(AbstractUser.Meta):
