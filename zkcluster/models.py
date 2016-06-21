@@ -24,12 +24,10 @@ class Terminal(models.Model):
         return self.name
 
     def format(self):
-        from signals import PauseSignal
-        with PauseSignal(signal=pre_delete, receiver=pre_delete_user, sender=User):
-            self.zk_connect()
-            self.zk_voice()
-            self.zk_clear_data()
-            self.users.all().delete()
+        self.zk_connect()
+        self.zk_voice()
+        self.zk_clear_data()
+        self.user_set.clear()
 
     def zk_connect(self):
         ip = self.ip
