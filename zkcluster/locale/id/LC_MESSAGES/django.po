@@ -99,7 +99,7 @@ msgstr "Koneksi ke terminal error"
 
 #: models.py:105
 msgid "user id"
-msgstr "Pengguna tidak tersedia"
+msgstr "user id"
 
 #: models.py:107
 msgid "timestamp"
