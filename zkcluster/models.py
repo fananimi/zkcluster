@@ -2,8 +2,10 @@ from __future__ import unicode_literals
 
 import zk
 from zk.exception import ZKError
-from django.utils.translation import ugettext_lazy as _
+
 from django.db import models
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 from .settings import get_terminal_timeout
 
@@ -37,7 +39,7 @@ class Terminal(models.Model):
             new_attendance = Attendance.objects.create(
                 user_id=attendance.user_id,
                 terminal=self,
-                timestamp=attendance.timestamp,
+                timestamp=timezone.make_aware(attendance.timestamp),
                 status=attendance.status
             )
         self.zk_clear_attendances()
