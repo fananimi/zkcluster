@@ -107,7 +107,7 @@ msgstr "Waktu"
 
 #: models.py:108
 msgid "status"
-msgstr "Setatus"
+msgstr "Status"
 
 #: models.py:117
 msgid "fullname"
@@ -157,7 +157,7 @@ msgstr "Waktu"
 
 #: templates/zkcluster/attendance.html:19
 msgid "Status"
-msgstr "Setatus"
+msgstr "Status"
 
 #: templates/zkcluster/attendance.html:35
 msgid "No attendance record"
