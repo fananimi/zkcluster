@@ -29,6 +29,21 @@ class Terminal(models.Model):
         self.zk_clear_data()
         self.user_set.clear()
 
+    def sync_report(self):
+        from zkcluster.models import Attendance
+
+        self.zk_connect()
+        for attendance in self.zk_get_attendances():
+            new_attendance = Attendance.objects.create(
+                user_id=attendance.user_id,
+                terminal=self,
+                timestamp=attendance.timestamp,
+                status=attendance.status
+            )
+        self.zk_clear_attendances()
+        self.zk_voice()
+        self.zk_disconnect()
+
     def zk_connect(self):
         ip = self.ip
         port = self.port

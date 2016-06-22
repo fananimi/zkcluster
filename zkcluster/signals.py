@@ -1,8 +1,8 @@
 from django.dispatch.dispatcher import receiver
-from django.db.models.signals import pre_save, pre_delete, m2m_changed
+from django.db.models.signals import pre_save, post_save, pre_delete, m2m_changed
 
 from zkcluster import get_user_model
-from zkcluster.models import Terminal
+from zkcluster.models import Terminal, Attendance
 
 User = get_user_model()
 
@@ -94,4 +94,14 @@ def on_user_add_to_terminal(**kwargs):
     if action == 'pre_remove':
         pass
     if action == 'post_remove':
+        pass
+
+@receiver(post_save, sender=Attendance)
+def on_save_attendance(**kwargs):
+    instance = kwargs['instance']
+
+    try:
+        user = User.objects.get(pk=instance.user_id)
+        user.attendances.add(instance)
+    except User.DoesNotExist:
         pass
