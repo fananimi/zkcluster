@@ -124,6 +124,19 @@ class Attendance(models.Model):
     timestamp = models.DateTimeField(_('timestamp'))
     status = models.IntegerField(_('status'))
 
+    @property
+    def user(self):
+        from zkcluster import get_user_model
+        User = get_user_model()
+        user = None
+
+        try:
+            user = User.objects.get(pk=self.user_id)
+        except User.DoesNotExist:
+            pass
+
+        return user
+
     class Meta:
         db_table = 'zk_attendance'
 
@@ -157,13 +170,6 @@ class ZKBaseUser(models.Model):
     terminals = models.ManyToManyField(
         Terminal,
         verbose_name=_('terminals'),
-        blank=True,
-        related_name="user_set",
-        related_query_name="user",
-    )
-    attendances = models.ManyToManyField(
-        Attendance,
-        verbose_name=_('attendances'),
         blank=True,
         related_name="user_set",
         related_query_name="user",

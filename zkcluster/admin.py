@@ -81,7 +81,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = (User.NAME_FIELD, 'privilege', 'password', 'group_id')
 
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user_id', 'terminal', 'timestamp', 'status')
+    list_display = ('id', 'user_id', 'terminal', 'timestamp', 'status', 'user')
 
     def get_readonly_fields(self, request, obj=None):
         return self.fields or [f.name for f in self.model._meta.fields]

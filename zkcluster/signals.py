@@ -95,13 +95,3 @@ def on_user_add_to_terminal(**kwargs):
         pass
     if action == 'post_remove':
         pass
-
-@receiver(post_save, sender=Attendance)
-def on_save_attendance(**kwargs):
-    instance = kwargs['instance']
-
-    try:
-        user = User.objects.get(pk=instance.user_id)
-        user.attendances.add(instance)
-    except User.DoesNotExist:
-        pass
