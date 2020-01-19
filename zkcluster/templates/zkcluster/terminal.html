@@ -18,6 +18,8 @@
           <th>{% trans 'Serial Number' %}</th>
           <th>{% trans 'IP' %}</th>
           <th>{% trans 'Port' %}</th>
+          <th>{% trans 'Passwrod' %}</th>
+          <th>{% trans 'Encode' %}</th>
           <th>{% trans 'Action' %}</th>
         </tr>
       </thead>
@@ -38,6 +40,8 @@
             <td>{{ terminal.serialnumber }}</td>
             <td>{{ terminal.ip }}</td>
             <td>{{ terminal.port }}</td>
+            <td>{{ terminal.devicepassword }}</td>
+            <td>{{ terminal.deviceencoding }}</td>
             <td style="text-align: center;">
               <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">

@@ -35,20 +35,20 @@ def pre_save_terminal(sender, **kwargs):
     instance.zk_voice()
     instance.zk_disconnect()
 
-@receiver(pre_save, sender=User)
-def pre_save_user(sender, **kwargs):
-    instance = kwargs['instance']
-    terminal = instance.terminal
-    terminal.zk_connect()
+# @receiver(pre_save, sender=User)
+# def pre_save_user(sender, **kwargs):
+#     instance = kwargs['instance']
+#     terminal = instance.terminal
+#     terminal.zk_connect()
 
-@receiver(post_save, sender=User)
-def post_save_user(sender, **kwargs):
-    instance = kwargs['instance']
-    terminal = instance.terminal
+# @receiver(post_save, sender=User)
+# def post_save_user(sender, **kwargs):
+#     instance = kwargs['instance']
+#     terminal = instance.terminal
 
-    terminal.zk_setuser(instance)
-    terminal.zk_voice()
-    terminal.zk_disconnect()
+#     terminal.zk_setuser(instance)
+#     terminal.zk_voice()
+#     terminal.zk_disconnect()
 
 @receiver(pre_delete, sender=User)
 def pre_delete_user(sender, **kwargs):
