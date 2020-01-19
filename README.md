@@ -4,13 +4,14 @@ zkcluster is a simple app to manage zksoftware fingerprint device.
 
 # update
 * 20200119
+```
   support pyzk-0.9
   delete download users to terminal devices
   Dependencies
     Python 2.7.17
     Django 1.7.11
     pyzk 0.9
-
+```
   
 
 # Dependencies
