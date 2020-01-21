@@ -25,7 +25,7 @@
               </button>
               <a class="navbar-brand" href="{% url 'zkcluster:index' %}">zkcluster</a>
             </div>
-            {% if request.user.is_superuser or 1%}
+            {% if user.is_superuser or %}
               <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                   <li {% if request.path == '/zkcluster/dashboard/' %}class="active"{% endif %}>
