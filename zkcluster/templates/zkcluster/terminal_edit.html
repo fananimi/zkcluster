@@ -34,6 +34,16 @@
               {{ form.port }}
             </div>
             <div class="form-group">
+              <label for="{{ form.devicepassword.auto_id }}">{{ form.devicepassword.label }}</label>
+              <span class="error">{{ form.devicepassword.errors.0 }}</span>
+              {{ form.devicepassword }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.deviceencoding.auto_id }}">{{ form.deviceencoding.label }}</label>
+              <span class="error">{{ form.deviceencoding.errors.0 }}</span>
+              {{ form.deviceencoding }}
+            </div>
+            <div class="form-group">
               <label for="{{ form.serialnumber.auto_id }}">{{ form.serialnumber.label }}</label>
               <span class="error">{{ form.serialnumber.errors.0 }}</span>
               {{ form.serialnumber }}

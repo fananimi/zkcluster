@@ -9,10 +9,11 @@ from .settings import get_terminal_timeout
 
 class Terminal(models.Model):
     name = models.CharField(_('name'), max_length=200)
-    serialnumber = models.CharField(_('serialnumber'), max_length=100, unique=True)
-    ip = models.CharField(_('ip'), max_length=15, unique=True)
-    port = models.IntegerField(_('port'), default=4370)
-
+    serialnumber = models.CharField(_('serialnumber'), max_length=100,blank=True ,help_text="device SerialNumber")
+    ip = models.CharField(_('ip'), max_length=15, unique=True,help_text="device IP")
+    port = models.IntegerField(_('port'), default=4370 ,help_text="device Port")
+    devicepassword =models.IntegerField(_('password'),max_length=6,  help_text="device password")
+    deviceencoding = models.CharField(_('encoding'), max_length=10,default='gbk',  blank= True, help_text="device content encode:bgk,utf-8...")
     class Meta:
         db_table = 'zk_terminal'
 
@@ -34,7 +35,9 @@ class Terminal(models.Model):
     def zk_connect(self):
         ip = self.ip
         port = self.port
-        terminal = zk.ZK(ip, port, get_terminal_timeout())
+        devicepassword = self.devicepassword
+        deviceencoding = self.deviceencoding
+        terminal = zk.ZK(ip, port, get_terminal_timeout(),devicepassword, False,False,False,deviceencoding)
         conn = terminal.connect()
         if conn:
             terminal.disable_device()
@@ -86,6 +89,12 @@ class Terminal(models.Model):
             raise ZKError(_('terminal connection error'))
         self.zkconn.delete_user(uid)
 
+    def zk_get_users(self):
+        if not self.zkconn:
+            raise ZKError(_('terminal connection error'))
+        zk_get_users = self.zkconn.get_users()
+        return  zk_get_users
+
     def zk_clear_data(self):
         if not self.zkconn:
             raise ZKError(_('terminal connection error'))
@@ -115,6 +124,8 @@ class User(models.Model):
     privilege = models.SmallIntegerField(_('privilege'), choices=PRIVILEGE_COICES, default=USER_DEFAULT)
     password = models.CharField(_('password'), max_length=8, blank=True, null=True)
     group_id = models.CharField(_('group id'), max_length=7, blank=True, null=True)
+    user_id = models.CharField(_('user_id'), max_length=7, blank=True, null=True)
+    #uid = models.CharField(_('uid'), max_length=7, blank=True, null=True)
     terminal = models.ForeignKey(Terminal, blank=True, null=True, on_delete=models.SET_NULL, related_name='users')
 
     class Meta:

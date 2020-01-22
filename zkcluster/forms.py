@@ -21,6 +21,22 @@ class ScanTerminal(forms.Form):
         })
     )
 
+    devicepassword = forms.IntegerField(
+        label=_('Password'),
+        widget=forms.TextInput(attrs={
+            'placeholder': 123456,
+            'class': 'form-control',
+        })
+    )
+
+    deviceencoding = forms.CharField(
+        label=_('Encode'),
+        widget=forms.TextInput(attrs={
+            'value': 'gbk',
+            'class': 'form-control',
+        })
+    )
+
     def clean_ip(self):
         ip = self.cleaned_data.get('ip')
         try:
@@ -93,7 +109,7 @@ class SaveTerminal(forms.ModelForm, ScanTerminal):
 
     class Meta:
         model = Terminal
-        fields = ('ip', 'port', 'serialnumber', 'name')
+        fields = ('ip', 'port', 'serialnumber', 'name' , 'devicepassword' ,'deviceencoding')
 
 class EditTerminal(SaveTerminal):
     def __init__(self, *args, **kwargs):
